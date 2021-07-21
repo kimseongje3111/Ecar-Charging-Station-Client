@@ -1,0 +1,2 @@
+rootProject.name = "ecar_service_station"
+include ':app'
