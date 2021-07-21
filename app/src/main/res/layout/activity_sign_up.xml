@@ -84,7 +84,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="20dp"
-            android:text="가입 완료" />
+            android:background="@drawable/selector_button_group"
+            android:text="가입 완료"
+            android:textColor="@color/hite" />
 
     </LinearLayout>
 </LinearLayout>

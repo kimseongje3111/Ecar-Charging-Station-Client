@@ -29,9 +29,6 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // 화면 설정
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
         eTextName = findViewById(R.id.editText_signUp_name);
         eTextPhoneNumber = findViewById(R.id.editText_signUp_phoneNumber);
         eTextEmail = findViewById(R.id.editText_signUp_email);
@@ -77,7 +74,14 @@ public class SignUpActivity extends AppCompatActivity {
                         finish();
 
                     } else {                                // 회원가입 실패
-                        String signUpFailedMsg = commonResponse.getMessage();
+                        String signUpFailedMsg = null;
+
+                        if (commonResponse.getResponseCode() == -1) {
+                            signUpFailedMsg = "가입 정보를 모두 입력하세요.";
+
+                        } else {
+                            signUpFailedMsg = commonResponse.getMessage();
+                        }
 
                         SnackBarManager.showMessage(v, signUpFailedMsg);
                     }

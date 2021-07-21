@@ -4,8 +4,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.app.Activity;
@@ -18,6 +21,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.RecognizerIntent;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,6 +45,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -55,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private EditText eTextSearch;
     private ImageView iViewSearch, iViewSpeaker, iViewGps;
     private LinearLayout layoutRecentAndBookmark, layoutReservationList;
+    private Toolbar toolBarMain;
+    private DrawerLayout drawerLayoutMain;
+    private NavigationView navigationMain;
     private Spinner spinnerCpType, spinnerChargerType;
 
     private GoogleMap map;
@@ -102,21 +110,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_main);
 
         // 화면 설정
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
         eTextSearch = findViewById(R.id.editText_search);
         iViewSearch = findViewById(R.id.imageView_search);
         iViewSpeaker = findViewById(R.id.imageView_stt_speaker);
         iViewGps = findViewById(R.id.imageView_gps);
         layoutRecentAndBookmark = findViewById(R.id.layout_recent_search_and_bookmark);
         layoutReservationList = findViewById(R.id.layout_reservationList);
+        toolBarMain = findViewById(R.id.toolbar_main);
+        drawerLayoutMain = findViewById(R.id.drawer_main);
+        navigationMain = findViewById(R.id.nav_main);
         spinnerCpType = findViewById(R.id.spinner_cpType);
         spinnerChargerType = findViewById(R.id.spinner_chargerType);
 
-        // 커스텀 화면 설정
+        // 네비게이션바 및 커스텀 화면 설정
+        settingDrawer();
         settingCustomViews();
 
+        setSupportActionBar(toolBarMain);
         // 로그인 토큰 로컬 저장
         saveLoginToken();
 
@@ -229,6 +239,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                drawerLayoutMain.openDrawer(GravityCompat.START);
+
+                return true;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
@@ -270,6 +293,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onBackPressed() {
+        if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
+            drawerLayoutMain.closeDrawers();
+        }
+    }
+
+    private void settingDrawer() {
+        setSupportActionBar(toolBarMain);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        actionBar.setSubtitle("");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_bars_solid);
+
+        navigationMain.setNavigationItemSelectedListener(item -> {
+            item.setChecked(true);
+            drawerLayoutMain.closeDrawers();
+
+
+            return true;
+        });
     }
 
     private void settingCustomViews() {
