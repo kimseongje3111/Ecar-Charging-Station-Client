@@ -69,6 +69,10 @@ public class SignUpActivity extends AppCompatActivity {
                     CommonResponse commonResponse = signUpService.execute(signUpDto).get();
 
                     if (commonResponse.isSuccess()) {       // 회원가입 성공
+                        String authEmailRequestMsg = "인증 메일 요청 중입니다.";
+
+                        SnackBarManager.showMessage(v, authEmailRequestMsg);
+
                         setResult(Activity.RESULT_OK);
                         finish();
 

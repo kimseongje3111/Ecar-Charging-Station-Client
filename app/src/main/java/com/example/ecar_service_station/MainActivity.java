@@ -8,7 +8,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -24,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.ecar_service_station.domain.Charger;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private EditText eTextSearch;
     private ImageView iViewSearch, iViewSpeaker, iViewGps;
+    private LinearLayout layoutRecentAndBookmark, layoutReservationList;
     private Spinner spinnerCpType, spinnerChargerType;
 
     private GoogleMap map;
@@ -108,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         iViewSearch = findViewById(R.id.imageView_search);
         iViewSpeaker = findViewById(R.id.imageView_stt_speaker);
         iViewGps = findViewById(R.id.imageView_gps);
+        layoutRecentAndBookmark = findViewById(R.id.layout_recent_search_and_bookmark);
+        layoutReservationList = findViewById(R.id.layout_reservationList);
         spinnerCpType = findViewById(R.id.spinner_cpType);
         spinnerChargerType = findViewById(R.id.spinner_chargerType);
 
@@ -205,6 +208,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
+
+        // 화면 동작(4) : 최근 검색/즐겨찾기
+        layoutRecentAndBookmark.setOnClickListener(v -> {
+
+        });
+
+        // 화면 동작(6) : 예약 목록
+        layoutReservationList.setOnClickListener(v -> {
+
+        });
     }
 
     @Override
@@ -234,7 +247,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     // 지도 업로드 후 현재 위치 마커(Marker) 설정
     @Override
-    @SuppressLint("MissingPermission")
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
@@ -251,7 +263,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (currentLocation != null) {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
-            map.setMyLocationEnabled(true);
             map.addMarker(new MarkerOptions().position(latLng).title("현위치"));
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         }

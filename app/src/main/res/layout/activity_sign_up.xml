@@ -5,12 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".SignUpActivity">
 
     <TextView
         android:id="@+id/textView_signUp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@color/ivory"
         android:gravity="center"
         android:text="회원가입"
         android:textColor="#1F51B7"
@@ -18,8 +21,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
 
         <EditText
             android:id="@+id/editText_signUp_name"
