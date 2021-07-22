@@ -1,5 +1,6 @@
 package com.example.ecar_service_station.service;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,6 +10,7 @@ import com.example.ecar_service_station.dto.request.user.UpdatePasswordDto;
 import com.example.ecar_service_station.dto.request.user.UpdateUserDto;
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.SingleResultResponse;
+import com.example.ecar_service_station.infra.app.PreferenceManager;
 import com.example.ecar_service_station.infra.network.HttpConnectionProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,6 +30,7 @@ public class UserBasicService extends AsyncTask<Integer, Void, CommonResponse> {
     private final ObjectMapper objectMapper;
     private final String loginAccessToken;
 
+    private Context context;
     private UpdateUserDto updateUser;
     private UpdatePasswordDto updatePassword;
     private UpdateNotificationDto updateNotification;
@@ -36,6 +39,13 @@ public class UserBasicService extends AsyncTask<Integer, Void, CommonResponse> {
         this.httpConnectionProvider = new HttpConnectionProvider();
         this.objectMapper = new ObjectMapper();
         this.loginAccessToken = loginAccessToken;
+    }
+
+    public UserBasicService(String loginAccessToken, Context context) {
+        this.httpConnectionProvider = new HttpConnectionProvider();
+        this.objectMapper = new ObjectMapper();
+        this.loginAccessToken = loginAccessToken;
+        this.context = context;
     }
 
     public UserBasicService(String loginAccessToken, UpdateUserDto updateUserDto) {
@@ -99,7 +109,19 @@ public class UserBasicService extends AsyncTask<Integer, Void, CommonResponse> {
                 String jsonString = httpConnectionProvider.readData(httpURLConnection);
 
                 if (requestCode[0] == USER_BASIC_SERVICE_GET_USER_INFO) {
-                    return objectMapper.readValue(jsonString, new TypeReference<SingleResultResponse<User>>() {});
+                    SingleResultResponse<User> result =
+                            objectMapper.readValue(jsonString, new TypeReference<SingleResultResponse<User>>() {});
+
+                    if (context != null) {
+                        User user = result.getData();
+
+                        PreferenceManager.setString(context, "USER_NAME", user.getName());
+                        PreferenceManager.setString(context, "USER_EMAIL", user.getEmail());
+                        PreferenceManager.setInt(context, "USER_CASH", user.getCash());
+                        PreferenceManager.setInt(context, "USER_CASH_POINT", user.getCashPoint());
+                    }
+
+                    return result;
                 }
 
                 return objectMapper.readValue(jsonString, CommonResponse.class);

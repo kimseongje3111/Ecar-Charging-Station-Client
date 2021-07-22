@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.RecognizerIntent;
@@ -29,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.ecar_service_station.domain.Charger;
 import com.example.ecar_service_station.dto.request.search.SearchConditionDto;
@@ -39,6 +41,7 @@ import com.example.ecar_service_station.infra.app.GpsTracker;
 import com.example.ecar_service_station.infra.app.PreferenceManager;
 import com.example.ecar_service_station.infra.app.SnackBarManager;
 import com.example.ecar_service_station.service.SearchService;
+import com.example.ecar_service_station.service.UserBasicService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -54,16 +57,19 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int PERMISSIONS_REQUEST_CODE = 3000;
+    private static final int USER_BASIC_SERVICE_GET_USER_INFO = -1;
     private static final int SEARCH_SERVICE_BY_TEXT = -15;
     private static final int SEARCH_SERVICE_BY_LOCATION = -16;
 
     private EditText eTextSearch;
     private ImageView iViewSearch, iViewSpeaker, iViewGps;
     private LinearLayout layoutRecentAndBookmark, layoutReservationList;
+    private Spinner spinnerCpType, spinnerChargerType;
+
     private Toolbar toolBarMain;
     private DrawerLayout drawerLayoutMain;
     private NavigationView navigationMain;
-    private Spinner spinnerCpType, spinnerChargerType;
+    private TextView textNavName, textNavEmail, textNavCash, textNavCashPoint;
 
     private GoogleMap map;
     private SupportMapFragment mapFragment;
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GpsTracker gpsTracker;
     private Location currentLocation;
 
+    private UserBasicService userBasicService;
     private SearchService searchService;
     private int conditionCpType;
     private int conditionChargerType;
@@ -116,19 +123,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         iViewGps = findViewById(R.id.imageView_gps);
         layoutRecentAndBookmark = findViewById(R.id.layout_recent_search_and_bookmark);
         layoutReservationList = findViewById(R.id.layout_reservationList);
+        spinnerCpType = findViewById(R.id.spinner_cpType);
+        spinnerChargerType = findViewById(R.id.spinner_chargerType);
+
         toolBarMain = findViewById(R.id.toolbar_main);
         drawerLayoutMain = findViewById(R.id.drawer_main);
         navigationMain = findViewById(R.id.nav_main);
-        spinnerCpType = findViewById(R.id.spinner_cpType);
-        spinnerChargerType = findViewById(R.id.spinner_chargerType);
+        textNavName = findViewById(R.id.textView_nav_name);
+        textNavEmail = findViewById(R.id.textView_nav_email);
+        textNavCash = findViewById(R.id.textView_nav_cash);
+        textNavCashPoint = findViewById(R.id.textView_nav_cash_point);
+
+        // 로그인 토큰 저장 및 로그인 유저 정보 업데이트
+        saveLoginToken();
+        updateLoginUserInfo();
 
         // 네비게이션바 및 커스텀 화면 설정
         settingDrawer();
         settingCustomViews();
-
-        setSupportActionBar(toolBarMain);
-        // 로그인 토큰 로컬 저장
-        saveLoginToken();
 
         // 화면 동작(1) : 음성 인식 (STT)
         iViewSpeaker.setOnClickListener(v -> new Thread(this::getVoice).start());
@@ -234,37 +246,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
 
-        eTextSearch.setText("");
-        settingCustomViews();
-    }
+        updateLoginUserInfo();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                drawerLayoutMain.openDrawer(GravityCompat.START);
-
-                return true;
-            }
+        if (conditionCpType != 0 || conditionChargerType != 0) {
+            settingCustomViews();
         }
 
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSIONS_REQUEST_CODE && grantResults.length == requiredPermissions.length) {
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    View layoutMain = findViewById(R.id.layout_main);
-                    String permissionSettingMsg = "위치 접근 권한이 거부되었습니다.\n애플리케이션을 다시 실행하거나 설정에서 권한을 허용해야 합니다.";
-
-                    SnackBarManager.showMessage(layoutMain, permissionSettingMsg);
-                    break;
-                }
-            }
+        if (!eTextSearch.getText().toString().isEmpty()) {
+            eTextSearch.setText("");
         }
     }
 
@@ -292,10 +281,61 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSIONS_REQUEST_CODE && grantResults.length == requiredPermissions.length) {
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    View layoutMain = findViewById(R.id.layout_main);
+                    String permissionSettingMsg = "위치 접근 권한이 거부되었습니다.\n애플리케이션을 다시 실행하거나 설정에서 권한을 허용해야 합니다.";
+
+                    SnackBarManager.showMessage(layoutMain, permissionSettingMsg);
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            String userName = PreferenceManager.getString(MainActivity.this, "USER_NAME");
+            String userEmail = PreferenceManager.getString(MainActivity.this, "USER_EMAIL");
+            int userCash = PreferenceManager.getInt(MainActivity.this, "USER_CASH");
+            int userCashPoint = PreferenceManager.getInt(MainActivity.this, "USER_CASH_POINT");
+
+            textNavName.setText(userName);
+            textNavEmail.setText(userEmail);
+            textNavCash.setText(userCash + " 원");
+            textNavCashPoint.setText(userCashPoint + " 포인트");
+
+            drawerLayoutMain.openDrawer(GravityCompat.START);
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
             drawerLayoutMain.closeDrawers();
         }
+    }
+
+    private void saveLoginToken() {
+        String loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");
+
+        PreferenceManager.setString(MainActivity.this, "LOGIN_ACCESS_TOKEN", loginAccessToken);
+    }
+
+    private void updateLoginUserInfo() {
+        String loginAccessToken = PreferenceManager.getString(MainActivity.this, "LOGIN_ACCESS_TOKEN");
+
+        userBasicService = new UserBasicService(loginAccessToken, MainActivity.this);
+        userBasicService.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, USER_BASIC_SERVICE_GET_USER_INFO);
     }
 
     private void settingDrawer() {
@@ -311,6 +351,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             item.setChecked(true);
             drawerLayoutMain.closeDrawers();
 
+            switch (item.getItemId()) {
+                case R.id.menu_user: {
+
+                }
+                case R.id.menu_account: {
+
+                }
+                case R.id.menu_car: {
+
+                }
+                case R.id.menu_bookmark: {
+
+                }
+                case R.id.menu_reservation: {
+
+                }
+                case R.id.menu_setting: {
+                    
+                }
+            }
 
             return true;
         });
@@ -318,6 +378,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void settingCustomViews() {
         // 검색 조건(1) : 충전 방식
+        conditionCpType = 0;
+
         ArrayAdapter<CharSequence> adapterCpType =
                 ArrayAdapter.createFromResource(MainActivity.this, R.array.custom_array_cpType, android.R.layout.simple_spinner_item);
 
@@ -337,8 +399,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         // 검색 조건(2) : 충전기 타입
+        conditionChargerType = 0;
+
         ArrayAdapter<CharSequence> adapterChargerType =
                 ArrayAdapter.createFromResource(MainActivity.this, R.array.custom_array_chargerType, android.R.layout.simple_spinner_item);
+
 
         adapterChargerType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -358,6 +423,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // 구글맵
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
         mapFragment.getMapAsync(this);
+    }
+
+    // 위치 서비스 설정 확인
+    private boolean checkLocationServicesStatus() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private void showDialogForLocationServiceSetting() {
@@ -403,20 +476,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         ActivityCompat.requestPermissions(MainActivity.this, requiredPermissions, PERMISSIONS_REQUEST_CODE);
-    }
-
-    // 위치 서비스 설정 확인
-    private boolean checkLocationServicesStatus() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-                || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
-    private void saveLoginToken() {
-        String loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");
-
-        PreferenceManager.setString(MainActivity.this, "LOGIN_ACCESS_TOKEN", loginAccessToken);
     }
 
     // STT
