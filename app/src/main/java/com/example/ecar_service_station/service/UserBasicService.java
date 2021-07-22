@@ -14,6 +14,7 @@ import com.example.ecar_service_station.infra.app.PreferenceManager;
 import com.example.ecar_service_station.infra.network.HttpConnectionProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -133,6 +134,8 @@ public class UserBasicService extends AsyncTask<Integer, Void, CommonResponse> {
             }
 
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
+
             Log.w("User basic service", "ObjectMapper error");
 
         } catch (IOException e) {

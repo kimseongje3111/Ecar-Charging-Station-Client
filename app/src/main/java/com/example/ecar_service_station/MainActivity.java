@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Toolbar toolBarMain;
     private DrawerLayout drawerLayoutMain;
     private NavigationView navigationMain;
-    private TextView textNavName, textNavEmail, textNavCash, textNavCashPoint;
 
     private GoogleMap map;
     private SupportMapFragment mapFragment;
@@ -129,14 +128,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         toolBarMain = findViewById(R.id.toolbar_main);
         drawerLayoutMain = findViewById(R.id.drawer_main);
         navigationMain = findViewById(R.id.nav_main);
-        textNavName = findViewById(R.id.textView_nav_name);
-        textNavEmail = findViewById(R.id.textView_nav_email);
-        textNavCash = findViewById(R.id.textView_nav_cash);
-        textNavCashPoint = findViewById(R.id.textView_nav_cash_point);
 
-        // 로그인 토큰 저장 및 로그인 유저 정보 업데이트
+        // 로그인 토큰 저장
         saveLoginToken();
-        updateLoginUserInfo();
 
         // 네비게이션바 및 커스텀 화면 설정
         settingDrawer();
@@ -300,6 +294,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            TextView textNavName = findViewById(R.id.textView_nav_name);
+            TextView textNavEmail = findViewById(R.id.textView_nav_email);
+            TextView textNavCash = findViewById(R.id.textView_nav_cash);
+            TextView textNavCashPoint = findViewById(R.id.textView_nav_cash_point);
+
             String userName = PreferenceManager.getString(MainActivity.this, "USER_NAME");
             String userEmail = PreferenceManager.getString(MainActivity.this, "USER_EMAIL");
             int userCash = PreferenceManager.getInt(MainActivity.this, "USER_CASH");
@@ -335,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         String loginAccessToken = PreferenceManager.getString(MainActivity.this, "LOGIN_ACCESS_TOKEN");
 
         userBasicService = new UserBasicService(loginAccessToken, MainActivity.this);
-        userBasicService.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, USER_BASIC_SERVICE_GET_USER_INFO);
+        userBasicService.execute(USER_BASIC_SERVICE_GET_USER_INFO);
     }
 
     private void settingDrawer() {
@@ -368,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 }
                 case R.id.menu_setting: {
-                    
+
                 }
             }
 
