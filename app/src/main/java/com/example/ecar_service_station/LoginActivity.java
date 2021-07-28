@@ -49,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // FCM 디바이스 토큰 로컬 저장
+        saveDeviceToken();
+
         // 화면 설정
         eTextEmail = findViewById(R.id.editText_login_email);
         eTextPassword = findViewById(R.id.editText_login_password);
@@ -57,9 +60,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // 로그인 서비스 주입
         loginService = new LoginService();
-
-        // FCM 디바이스 토큰 로컬 저장
-        saveDeviceToken();
 
         // 화면 동작(1) : 로그인 버튼
         btnLogin.setOnClickListener(v -> {

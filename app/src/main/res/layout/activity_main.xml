@@ -16,9 +16,7 @@
             android:id="@+id/toolbar_main"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/background_blue">
-
-        </androidx.appcompat.widget.Toolbar>
+            android:background="@color/purple_700" />
 
         <LinearLayout
             android:id="@+id/layout_main"
@@ -166,8 +164,8 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="5"
                             android:layout_marginBottom="3dp"
+                            android:layout_weight="5"
                             android:src="@drawable/outline_bookmark_24" />
 
                         <TextView
@@ -192,8 +190,8 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="5"
                             android:layout_marginBottom="3dp"
+                            android:layout_weight="5"
                             android:src="@drawable/outline_fact_check_24" />
 
                         <TextView
@@ -201,7 +199,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="예약내역" />
+                            android:text="예약/충전" />
 
                     </LinearLayout>
 
@@ -220,9 +218,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu">
-
-    </com.google.android.material.navigation.NavigationView>
+        app:menu="@menu/nav_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

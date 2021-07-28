@@ -115,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 로그인 토큰 저장
+        saveLoginToken();
+
         // 화면 설정
         eTextSearch = findViewById(R.id.editText_search);
         iViewSearch = findViewById(R.id.imageView_search);
@@ -124,13 +127,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         layoutReservationList = findViewById(R.id.layout_reservationList);
         spinnerCpType = findViewById(R.id.spinner_cpType);
         spinnerChargerType = findViewById(R.id.spinner_chargerType);
-
         toolBarMain = findViewById(R.id.toolbar_main);
         drawerLayoutMain = findViewById(R.id.drawer_main);
         navigationMain = findViewById(R.id.nav_main);
-
-        // 로그인 토큰 저장
-        saveLoginToken();
 
         // 네비게이션바 및 커스텀 화면 설정
         settingDrawer();
@@ -239,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onResume() {
         super.onResume();
-
         updateLoginUserInfo();
 
         if (conditionCpType != 0 || conditionChargerType != 0) {
@@ -306,8 +304,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             textNavName.setText(userName);
             textNavEmail.setText(userEmail);
-            textNavCash.setText(userCash + " 원");
-            textNavCashPoint.setText(userCashPoint + " 포인트");
+            textNavCash.setText(String.format("%d 원", userCash));
+            textNavCashPoint.setText(String.format("%d 포인트", userCashPoint));
 
             drawerLayoutMain.openDrawer(GravityCompat.START);
 
@@ -350,23 +348,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             item.setChecked(true);
             drawerLayoutMain.closeDrawers();
 
+            Intent intent;
+            String loginAccessToken = PreferenceManager.getString(MainActivity.this, "LOGIN_ACCESS_TOKEN");
+
             switch (item.getItemId()) {
                 case R.id.menu_user: {
+                    intent = new Intent(MainActivity.this, UserActivity.class);
+                    intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
 
+                    startActivity(intent);
+                    break;
                 }
-                case R.id.menu_account: {
-
-                }
-                case R.id.menu_car: {
+                case R.id.menu_reservation: {
 
                 }
                 case R.id.menu_bookmark: {
 
                 }
-                case R.id.menu_reservation: {
+                case R.id.menu_car: {
 
                 }
-                case R.id.menu_setting: {
+                case R.id.menu_account: {
+
+                }
+                case R.id.menu_notification: {
 
                 }
             }
@@ -385,6 +390,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         adapterCpType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerCpType.setAdapter(adapterCpType);
+        spinnerCpType.setFocusable(true);
         spinnerCpType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -407,6 +413,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         adapterChargerType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerChargerType.setAdapter(adapterChargerType);
+        spinnerChargerType.setFocusable(true);
         spinnerChargerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -17,7 +17,7 @@
         android:gravity="center"
         android:text="회원가입"
         android:textColor="#1F51B7"
-        android:textSize="24sp" />
+        android:textSize="30dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,6 +86,7 @@
             android:layout_marginVertical="20dp"
             android:background="@drawable/selector_button_group"
             android:text="가입 완료"
+            android:textStyle="bold"
             android:textColor="@color/hite" />
 
     </LinearLayout>

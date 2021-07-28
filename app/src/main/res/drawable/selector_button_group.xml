@@ -3,6 +3,5 @@
     <item
         android:drawable="@drawable/shape_button_sortblack"
         android:state_pressed="true" />
-
     <item android:drawable="@drawable/shape_button_purple" />
 </selector>
