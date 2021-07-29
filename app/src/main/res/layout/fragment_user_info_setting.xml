@@ -50,7 +50,7 @@
                     android:textSize="20dp" />
 
                 <Button
-                    android:id="@+id/btn_user_setting_name"
+                    android:id="@+id/btn_user_setting_name_change"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -104,7 +104,7 @@
                     android:textSize="20dp" />
 
                 <Button
-                    android:id="@+id/btn_user_setting_phoneNumber"
+                    android:id="@+id/btn_user_setting_phoneNumber_change"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"

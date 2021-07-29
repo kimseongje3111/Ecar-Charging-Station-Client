@@ -35,13 +35,12 @@
                     android:switchMinWidth="0dp"
                     android:text="예약 충전 시작 알림"
                     android:textColor="#1478cd"
-                    android:textOff=""
-                    android:textOn=""
                     android:textSize="25dp"
                     android:textStyle="bold"
                     android:thumbTextPadding="15dp" />
 
                 <LinearLayout
+                    android:id="@+id/layout_user_setting_notification1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/ivory"
@@ -95,13 +94,12 @@
                     android:switchMinWidth="0dp"
                     android:text="충전 종료 알림"
                     android:textColor="#1478cd"
-                    android:textOff=""
-                    android:textOn=""
                     android:textSize="25dp"
                     android:textStyle="bold"
                     android:thumbTextPadding="15dp" />
 
                 <LinearLayout
+                    android:id="@+id/layout_user_setting_notification2"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/ivory"

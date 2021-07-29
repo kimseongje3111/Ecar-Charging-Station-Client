@@ -33,7 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
         eTextPhoneNumber = findViewById(R.id.editText_signUp_phoneNumber);
         eTextEmail = findViewById(R.id.editText_signUp_email);
         eTextPassword = findViewById(R.id.editText_signUp_password);
-        eTextPasswordCheck = findViewById(R.id.editText_signUp_passwordCheck);
+        eTextPasswordCheck = findViewById(R.id.editText_signUp_password_check);
         btnRegister = findViewById(R.id.btn_signUp_register);
 
         // 회원가입 서비스 주입
