@@ -50,7 +50,7 @@ public class UserPasswordSettingFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        currentView = inflater.inflate(R.layout.fragment_user_info_setting, container, false);
+        currentView = inflater.inflate(R.layout.fragment_user_password_setting, container, false);
 
         // 화면 설정
         eTextPassword = currentView.findViewById(R.id.editTExt_user_setting_password);

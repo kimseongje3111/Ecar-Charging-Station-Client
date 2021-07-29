@@ -133,8 +133,8 @@ public class UserInfoSettingFragment extends Fragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(currentContext);
 
         alertDialogBuilder
-                .setTitle("사용자 이름 수정")
-                .setMessage(String.format("'%s'(으)로 변경하시겠습니까?", userName))
+                .setTitle("사용자 이름 변경")
+                .setMessage(String.format("'%s' (으)로 변경하시겠습니까?", userName))
                 .setCancelable(true)
                 .setPositiveButton("확인", (dialog, which) -> {
                     UpdateUserDto updateUserDto = new UpdateUserDto();
@@ -156,8 +156,8 @@ public class UserInfoSettingFragment extends Fragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(currentContext);
 
         alertDialogBuilder
-                .setTitle("사용자 전화번호 수정")
-                .setMessage(String.format("'%s'(으)로 변경하시겠습니까?", phoneNumber))
+                .setTitle("사용자 전화번호 변경")
+                .setMessage(String.format("'%s' (으)로 변경하시겠습니까?", phoneNumber))
                 .setCancelable(true)
                 .setPositiveButton("확인", (dialog, which) -> {
                     UpdateUserDto updateUserDto = new UpdateUserDto();

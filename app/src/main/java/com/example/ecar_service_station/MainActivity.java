@@ -304,8 +304,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             textNavName.setText(userName);
             textNavEmail.setText(userEmail);
-            textNavCash.setText(String.format("%d 원", userCash));
-            textNavCashPoint.setText(String.format("%d 포인트", userCashPoint));
+            textNavCash.setText(String.valueOf(userCash));
+            textNavCashPoint.setText(String.valueOf(userCashPoint));
 
             drawerLayoutMain.openDrawer(GravityCompat.START);
 
@@ -323,9 +323,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void saveLoginToken() {
-        String loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");
+        if (getIntent().hasExtra("LOGIN_ACCESS_TOKEN")) {
+            String loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");
 
-        PreferenceManager.setString(MainActivity.this, "LOGIN_ACCESS_TOKEN", loginAccessToken);
+            PreferenceManager.setString(MainActivity.this, "LOGIN_ACCESS_TOKEN", loginAccessToken);
+        }
     }
 
     private void updateLoginUserInfo() {
@@ -345,7 +347,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         actionBar.setHomeAsUpIndicator(R.drawable.ic_bars_solid);
 
         navigationMain.setNavigationItemSelectedListener(item -> {
-            item.setChecked(true);
             drawerLayoutMain.closeDrawers();
 
             Intent intent;
@@ -372,7 +373,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 }
                 case R.id.menu_notification: {
+                    intent = new Intent(MainActivity.this, UserSettingActivity.class);
+                    intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                    intent.putExtra("REQUEST_POSITION", 2);
 
+                    startActivity(intent);
                 }
             }
 

@@ -82,29 +82,31 @@ public class UserBasicService extends AsyncTask<Integer, Void, CommonResponse> {
                 case USER_BASIC_SERVICE_GET_USER_INFO:
                     httpURLConnection = httpConnectionProvider.createGETConnection(URI);
 
+                    httpConnectionProvider.addHeader(httpURLConnection, "X-AUTH-TOKEN", loginAccessToken);
                     break;
 
                 case USER_BASIC_SERVICE_UPDATE_USER_INFO:
-                    httpURLConnection =
-                            httpConnectionProvider.createPOSTConnection(URI, objectMapper.writeValueAsString(updateUser));
+                    httpURLConnection = httpConnectionProvider.createPOSTConnection(URI);
 
+                    httpConnectionProvider.addHeader(httpURLConnection, "X-AUTH-TOKEN", loginAccessToken);
+                    httpConnectionProvider.addData(httpURLConnection, objectMapper.writeValueAsString(updateUser));
                     break;
 
                 case USER_BASIC_SERVICE_UPDATE_PASSWORD:
                     URI += "/password";
-                    httpURLConnection =
-                            httpConnectionProvider.createPOSTConnection(URI, objectMapper.writeValueAsString(updatePassword));
+                    httpURLConnection = httpConnectionProvider.createPOSTConnection(URI);
 
+                    httpConnectionProvider.addHeader(httpURLConnection, "X-AUTH-TOKEN", loginAccessToken);
+                    httpConnectionProvider.addData(httpURLConnection, objectMapper.writeValueAsString(updatePassword));
                     break;
 
                 case USER_BASIC_SERVICE_UPDATE_NOTIFICATION:
                     URI += "/notification";
-                    httpURLConnection =
-                            httpConnectionProvider.createPOSTConnection(URI, objectMapper.writeValueAsString(updateNotification));
-            }
+                    httpURLConnection = httpConnectionProvider.createPOSTConnection(URI);
 
-            // 헤더에 로그인 토큰 추가
-            httpConnectionProvider.addHeader(httpURLConnection, "X-AUTH-TOKEN", loginAccessToken);
+                    httpConnectionProvider.addHeader(httpURLConnection, "X-AUTH-TOKEN", loginAccessToken);
+                    httpConnectionProvider.addData(httpURLConnection, objectMapper.writeValueAsString(updateNotification));
+            }
 
             if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 String jsonString = httpConnectionProvider.readData(httpURLConnection);

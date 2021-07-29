@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.example.ecar_service_station.adapter.UserSettingFragmentAdapter;
 import com.example.ecar_service_station.fragment.UserInfoSettingFragment;
@@ -43,8 +45,22 @@ public class UserSettingActivity extends AppCompatActivity {
         settingTabView();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void saveIntentValues() {
-        loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");
+        if (getIntent().hasExtra("LOGIN_ACCESS_TOKEN")) {
+            loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");
+        }
+
         requestPosition = getIntent().getIntExtra("REQUEST_POSITION", 0);
     }
 

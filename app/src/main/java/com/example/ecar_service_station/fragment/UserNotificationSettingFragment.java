@@ -113,6 +113,15 @@ public class UserNotificationSettingFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        if (isChanged) {
+            updateUserNotification();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -176,6 +185,8 @@ public class UserNotificationSettingFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                isChanged = true;
+
                 if (spinner.equals(spinnerNotification1)) {
                     minutesNotification1 = position + 1;
                 }

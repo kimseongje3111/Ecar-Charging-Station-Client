@@ -140,9 +140,11 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void saveLoginToken() {
-        String loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");
+        if (getIntent().hasExtra("LOGIN_ACCESS_TOKEN")) {
+            String loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");
 
-        PreferenceManager.setString(UserActivity.this, "LOGIN_ACCESS_TOKEN", loginAccessToken);
+            PreferenceManager.setString(UserActivity.this, "LOGIN_ACCESS_TOKEN", loginAccessToken);
+        }
     }
 
     private void settingActionBar() {
@@ -170,8 +172,8 @@ public class UserActivity extends AppCompatActivity {
                 textProfileName.setText(user.getName());
                 textProfileEmail.setText(user.getEmail());
                 textProfilePhoneNumber.setText(user.getPhoneNumber());
-                textUserCash.setText(String.format("%d 원", user.getCash()));
-                textUserCashPoint.setText(String.format("%d 포인트", user.getCashPoint()));
+                textUserCash.setText(String.valueOf(user.getCash()));
+                textUserCashPoint.setText(String.valueOf(user.getCash()));
 
             } else {
                 String loadUserInfoFailedMsg = "사용자 정보를 불러올 수 없습니다.";
