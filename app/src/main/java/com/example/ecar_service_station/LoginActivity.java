@@ -2,14 +2,12 @@ package com.example.ecar_service_station;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -37,10 +35,9 @@ public class LoginActivity extends AppCompatActivity {
                     result -> {
                         // 회원가입 성공
                         if (result.getResultCode() == Activity.RESULT_OK) {
-                            View layoutLogin = findViewById(R.id.layout_login);
                             String signUpSuccessMsg = "회원가입이 되었습니다.\n서비스 이용을 위해 이메일 인증을 완료해주세요.";
 
-                            SnackBarManager.showMessage(layoutLogin, signUpSuccessMsg);
+                            SnackBarManager.showMessage(findViewById(R.id.layout_login), signUpSuccessMsg);
                         }
                     });
 

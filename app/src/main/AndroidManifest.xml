@@ -42,7 +42,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".UserActivity" />
-        <activity android:name=".UserSettingActivity"></activity>
+        <activity android:name=".UserSettingActivity" />
+        <activity android:name=".CarActivity" />
+        <activity android:name=".CarRegistrationActivity"></activity>
 
         <service
             android:name=".infra.network.CustomFcmService"

@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -279,10 +280,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (requestCode == PERMISSIONS_REQUEST_CODE && grantResults.length == requiredPermissions.length) {
             for (int result : grantResults) {
                 if (result != PackageManager.PERMISSION_GRANTED) {
-                    View layoutMain = findViewById(R.id.layout_main);
                     String permissionSettingMsg = "위치 접근 권한이 거부되었습니다.\n애플리케이션을 다시 실행하거나 설정에서 권한을 허용해야 합니다.";
 
-                    SnackBarManager.showMessage(layoutMain, permissionSettingMsg);
+                    SnackBarManager.showMessage(findViewById(R.id.layout_main), permissionSettingMsg);
                     break;
                 }
             }
@@ -449,16 +449,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         alertDialogBuilder
                 .setTitle("위치 서비스 비활성화")
-                .setMessage("본 애플리케이션 이용을 위해 위치 서비스가 필요합니다.")
+                .setMessage(" 본 애플리케이션 이용을 위해 위치 서비스가 필요합니다.")
                 .setCancelable(true)
                 .setPositiveButton("설정", (dialog, which) -> {
                     Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
 
                     startActivityResultForLocationServiceSetting.launch(intent);
                 })
-                .setNegativeButton("취소", (dialog, which) -> {
-                    dialog.cancel();
-                })
+                .setNegativeButton("취소", (dialog, which) -> dialog.cancel())
                 .create()
                 .show();
     }
@@ -480,10 +478,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, requiredPermissions[0])
                 || ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, requiredPermissions[1])) {
 
-            View layoutMain = findViewById(R.id.layout_main);
             String permissionSettingMsg = "이 애플리케이션을 실행하려면 위치 접근 권한이 필요합니다.";
 
-            SnackBarManager.showMessage(layoutMain, permissionSettingMsg);
+            SnackBarManager.showMessage(findViewById(R.id.layout_main), permissionSettingMsg);
         }
 
         ActivityCompat.requestPermissions(MainActivity.this, requiredPermissions, PERMISSIONS_REQUEST_CODE);

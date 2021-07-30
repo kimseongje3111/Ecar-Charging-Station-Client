@@ -136,8 +136,6 @@ public class UserBasicService extends AsyncTask<Integer, Void, CommonResponse> {
             }
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-
             Log.w("User basic service", "ObjectMapper error");
 
         } catch (IOException e) {

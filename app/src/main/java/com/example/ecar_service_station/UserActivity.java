@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -97,12 +96,22 @@ public class UserActivity extends AppCompatActivity {
 
         // 화면 동작(4) : 등록 차량 목록
         layoutCarList.setOnClickListener(v -> {
+            String loginAccessToken = PreferenceManager.getString(UserActivity.this, "LOGIN_ACCESS_TOKEN");
 
+            Intent intent = new Intent(UserActivity.this, CarActivity.class);
+            intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+
+            startActivity(intent);
         });
 
         // 화면 동작(5) : 새 차량 등록
         layoutNewCar.setOnClickListener(v -> {
+            String loginAccessToken = PreferenceManager.getString(UserActivity.this, "LOGIN_ACCESS_TOKEN");
 
+            Intent intent = new Intent(UserActivity.this, CarRegistrationActivity.class);
+            intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+
+            startActivity(intent);
         });
 
         // 화면 동작(6) : 연결 계좌 목록
@@ -173,7 +182,7 @@ public class UserActivity extends AppCompatActivity {
                 textProfileEmail.setText(user.getEmail());
                 textProfilePhoneNumber.setText(user.getPhoneNumber());
                 textUserCash.setText(String.valueOf(user.getCash()));
-                textUserCashPoint.setText(String.valueOf(user.getCash()));
+                textUserCashPoint.setText(String.valueOf(user.getCashPoint()));
 
             } else {
                 String loadUserInfoFailedMsg = "사용자 정보를 불러올 수 없습니다.";

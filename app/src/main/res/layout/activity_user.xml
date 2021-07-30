@@ -17,7 +17,7 @@
             android:id="@+id/toolbar_user"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/purple_700"
+            android:background="@color/textblue"
             app:contentInsetStart="0dp"
             app:layout_scrollFlags="scroll|enterAlways" />
 
@@ -33,13 +33,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFAFA"
+            android:background="@color/ivory"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
-                android:background="@color/purple_500"
+                android:background="@color/marine"
                 android:orientation="vertical"
                 android:weightSum="6">
 
@@ -101,7 +101,7 @@
                                 android:paddingLeft="20dp"
                                 android:text="NAME"
                                 android:textColor="@color/white"
-                                android:textSize="15dp" />
+                                android:textSize="12dp" />
 
                         </LinearLayout>
 
@@ -133,7 +133,7 @@
                                 android:paddingLeft="20dp"
                                 android:text="E-MAIL"
                                 android:textColor="@color/white"
-                                android:textSize="15dp" />
+                                android:textSize="12dp" />
 
                         </LinearLayout>
 
@@ -165,7 +165,7 @@
                                 android:paddingLeft="20dp"
                                 android:text="PHONE NUMBER"
                                 android:textColor="@color/white"
-                                android:textSize="15dp" />
+                                android:textSize="12dp" />
 
                         </LinearLayout>
 
@@ -187,16 +187,16 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:weightSum="9">
+                    android:paddingHorizontal="15dp"
+                    android:weightSum="10">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="4"
+                        android:layout_weight="5"
                         android:orientation="horizontal"
-                        android:paddingVertical="10dp"
-                        android:paddingLeft="20dp">
+                        android:paddingVertical="10dp">
 
                         <ImageView
                             android:layout_width="10dp"
@@ -211,7 +211,7 @@
                             android:gravity="center_vertical"
                             android:text="보유 금액  :"
                             android:textColor="@color/white"
-                            android:textSize="16dp"
+                            android:textSize="15dp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -222,7 +222,7 @@
                             android:gravity="center_vertical"
                             android:text="0"
                             android:textColor="@color/white"
-                            android:textSize="16dp" />
+                            android:textSize="15dp" />
 
                     </LinearLayout>
 
@@ -233,7 +233,7 @@
                         android:layout_weight="5"
                         android:orientation="horizontal"
                         android:paddingVertical="10dp"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="5dp"
                         android:weightSum="2">
 
                         <ImageView
@@ -249,7 +249,7 @@
                             android:gravity="center_vertical"
                             android:text="보유 포인트  :"
                             android:textColor="@color/white"
-                            android:textSize="16dp"
+                            android:textSize="15dp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -260,7 +260,7 @@
                             android:gravity="center_vertical"
                             android:text="0"
                             android:textColor="@color/white"
-                            android:textSize="16dp" />
+                            android:textSize="15dp" />
 
                     </LinearLayout>
 
