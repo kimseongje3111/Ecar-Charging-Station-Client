@@ -71,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/imageView_new_car"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginVertical="20dp"
                 android:background="@drawable/selector_button_group2"

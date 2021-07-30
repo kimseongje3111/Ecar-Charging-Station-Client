@@ -367,6 +367,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 }
                 case R.id.menu_car: {
+                    intent = new Intent(MainActivity.this, CarActivity.class);
+                    intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+
+                    startActivity(intent);
+                    break;
 
                 }
                 case R.id.menu_account: {
@@ -449,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         alertDialogBuilder
                 .setTitle("위치 서비스 비활성화")
-                .setMessage(" 본 애플리케이션 이용을 위해 위치 서비스가 필요합니다.")
+                .setMessage("본 애플리케이션 이용을 위해 위치 서비스가 필요합니다.")
                 .setCancelable(true)
                 .setPositiveButton("설정", (dialog, which) -> {
                     Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);

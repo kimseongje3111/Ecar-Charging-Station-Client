@@ -112,6 +112,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     private void saveDeviceToken() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {

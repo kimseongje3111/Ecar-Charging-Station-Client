@@ -3,6 +3,7 @@ package com.example.ecar_service_station;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -75,6 +77,23 @@ public class CarActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadUserCarList();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            startActivity(new Intent(CarActivity.this, MainActivity.class));
+            finish();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     private void saveLoginToken() {
@@ -157,7 +176,7 @@ public class CarActivity extends AppCompatActivity {
 
         alertDialogBuilder
                 .setTitle("차량 삭제")
-                .setMessage(" 선택한 차량을 삭제하시겠습니까?\n 해당 차량의 예약 및 기록이 함께 삭제됩니다.")
+                .setMessage("선택한 차량을 삭제하시겠습니까?\n해당 차량의 예약 및 기록이 함께 삭제됩니다.")
                 .setCancelable(true)
                 .setPositiveButton("확인", (dialog, which) -> {
                     String loginAccessToken = PreferenceManager.getString(CarActivity.this, "LOGIN_ACCESS_TOKEN");

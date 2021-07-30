@@ -134,7 +134,7 @@ public class UserInfoSettingFragment extends Fragment {
 
         alertDialogBuilder
                 .setTitle("사용자 이름 변경")
-                .setMessage(String.format(" '%s' (으)로\n 변경하시겠습니까?", userName))
+                .setMessage(String.format("'%s' (으)로\n변경하시겠습니까?", userName))
                 .setCancelable(true)
                 .setPositiveButton("확인", (dialog, which) -> {
                     UpdateUserDto updateUserDto = new UpdateUserDto();
@@ -157,7 +157,7 @@ public class UserInfoSettingFragment extends Fragment {
 
         alertDialogBuilder
                 .setTitle("연락처 변경")
-                .setMessage(String.format(" '%s' (으)로\n 변경하시겠습니까?", phoneNumber))
+                .setMessage(String.format("'%s' (으)로\n변경하시겠습니까?", phoneNumber))
                 .setCancelable(true)
                 .setPositiveButton("확인", (dialog, which) -> {
                     UpdateUserDto updateUserDto = new UpdateUserDto();

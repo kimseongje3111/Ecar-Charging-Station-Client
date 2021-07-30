@@ -55,6 +55,11 @@ public class UserSettingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     private void saveIntentValues() {
         if (getIntent().hasExtra("LOGIN_ACCESS_TOKEN")) {
             loginAccessToken = getIntent().getStringExtra("LOGIN_ACCESS_TOKEN");

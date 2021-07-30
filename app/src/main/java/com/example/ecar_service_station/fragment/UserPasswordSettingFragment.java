@@ -82,7 +82,7 @@ public class UserPasswordSettingFragment extends Fragment {
 
         alertDialogBuilder
                 .setTitle("비밀번호 변경")
-                .setMessage(" 확인을 누르시면 비밀번호가 변경되며 자동으로 로그아웃 됩니다.")
+                .setMessage("확인을 누르시면 비밀번호가 변경되며, 자동으로 로그아웃 됩니다.")
                 .setCancelable(true)
                 .setPositiveButton("확인", (dialog, which) -> {
                     UpdatePasswordDto updatePasswordDto = new UpdatePasswordDto();
