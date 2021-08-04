@@ -26,7 +26,7 @@ public class CarService extends AsyncTask<Integer, Void, CommonResponse> {
     private final String loginAccessToken;
 
     private RegisterCarDto registerCarDto;
-    private long carIdDeleted;
+    private long carId;
 
     public CarService(String loginAccessToken) {
         this.httpConnectionProvider = new HttpConnectionProvider();
@@ -41,11 +41,11 @@ public class CarService extends AsyncTask<Integer, Void, CommonResponse> {
         this.registerCarDto = registerCarDto;
     }
 
-    public CarService(String loginAccessToken, long carIdDeleted) {
+    public CarService(String loginAccessToken, long carId) {
         this.httpConnectionProvider = new HttpConnectionProvider();
         this.objectMapper = new ObjectMapper();
         this.loginAccessToken = loginAccessToken;
-        this.carIdDeleted = carIdDeleted;
+        this.carId = carId;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class CarService extends AsyncTask<Integer, Void, CommonResponse> {
                     break;
 
                 case CAR_SERVICE_DELETE_USER_CAR:
-                    URI += ("/" + carIdDeleted);
+                    URI += ("/" + carId);
                     httpURLConnection = httpConnectionProvider.createDELETEConnection(URI);
 
                     httpConnectionProvider.addHeader(httpURLConnection, "X-AUTH-TOKEN", loginAccessToken);

@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ecar_service_station.adapter.UserSettingFragmentAdapter;
@@ -45,9 +47,21 @@ public class UserSettingActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bar_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+
+            return true;
+
+        } else if (item.getItemId() == R.id.action_home) {
+            finish();
+            startActivity(new Intent(UserSettingActivity.this, MainActivity.class));
 
             return true;
         }

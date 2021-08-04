@@ -67,6 +67,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="7"
                                 android:background="@drawable/shape_rectangle_white"
+                                android:fontFamily="@font/cafe_24_ssurround_air"
                                 android:gravity="left|center_vertical"
                                 android:hint="주소 / 충전소명"
                                 android:lines="1"
@@ -122,6 +123,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/shape_rectangle_white"
                             android:elevation="3dp"
+                            android:fontFamily="@font/cafe_24_ssurround_air"
                             android:spinnerMode="dropdown" />
 
                         <Spinner
@@ -133,6 +135,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/shape_rectangle_white"
                             android:elevation="3dp"
+                            android:fontFamily="@font/cafe_24_ssurround_air"
                             android:spinnerMode="dropdown" />
 
                     </LinearLayout>
@@ -172,6 +175,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="3"
+                            android:fontFamily="@font/cafe_24_ssurround_air"
                             android:gravity="center"
                             android:text="최근 검색/즐겨찾기" />
 
@@ -198,6 +202,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="3"
+                            android:fontFamily="@font/cafe_24_ssurround_air"
                             android:gravity="center"
                             android:text="예약/충전" />
 

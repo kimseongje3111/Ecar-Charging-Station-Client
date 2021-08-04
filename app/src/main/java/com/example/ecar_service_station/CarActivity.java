@@ -1,5 +1,7 @@
 package com.example.ecar_service_station;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CarActivity extends AppCompatActivity {
 
+    private static final int CAR_REGISTRATION_ACTIVITY_RESULT_OK = 100;
     private static final int CAR_SERVICE_GET_USER_CARS = -5;
     private static final int CAR_SERVICE_DELETE_USER_CAR = -7;
 
@@ -44,6 +48,16 @@ public class CarActivity extends AppCompatActivity {
     private Toolbar toolbarCar;
 
     private CarService carService;
+
+    private final ActivityResultLauncher<Intent> startActivityResultForCar =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == CAR_REGISTRATION_ACTIVITY_RESULT_OK) {
+                            finish();
+                            startActivity(new Intent(CarActivity.this, CarActivity.class));
+                        }
+                    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +83,7 @@ public class CarActivity extends AppCompatActivity {
             Intent intent = new Intent(CarActivity.this, CarRegistrationActivity.class);
             intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
 
-            startActivity(intent);
+            startActivityResultForCar.launch(intent);
         });
     }
 
@@ -80,10 +94,21 @@ public class CarActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bar_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            startActivity(new Intent(CarActivity.this, MainActivity.class));
             finish();
+
+            return true;
+
+        } else if (item.getItemId() == R.id.action_home) {
+            finish();
+            startActivity(new Intent(CarActivity.this, MainActivity.class));
 
             return true;
         }
@@ -111,7 +136,7 @@ public class CarActivity extends AppCompatActivity {
         actionBar.setTitle("");
         actionBar.setSubtitle("");
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_home_solid);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left_solid);
     }
 
     private void loadUserCarList() {
@@ -138,7 +163,7 @@ public class CarActivity extends AppCompatActivity {
             } else {
                 String loadCarListFailedMsg = "차량 정보를 불러올 수 없습니다.";
 
-                SnackBarManager.showMessage(findViewById(R.id.frameLayout_user), loadCarListFailedMsg);
+                SnackBarManager.showMessage(findViewById(R.id.scrollView_car), loadCarListFailedMsg);
             }
 
         } catch (ExecutionException | InterruptedException e) {
@@ -210,7 +235,7 @@ public class CarActivity extends AppCompatActivity {
 
             TextView carNumber = rowView.findViewById(R.id.listView_car_number);
             TextView carModel = rowView.findViewById(R.id.listView_car_model);
-            ImageView carDetails = rowView.findViewById(R.id.listView_car_details);
+            ImageView carDetails = rowView.findViewById(R.id.imageView_car_details);
 
             Car car = userCarList.get(position);
 

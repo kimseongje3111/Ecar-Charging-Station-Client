@@ -4,9 +4,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CarRegistrationActivity extends AppCompatActivity {
 
+    private static final int CAR_REGISTRATION_ACTIVITY_RESULT_OK = 100;
     private static final int CAR_SERVICE_REGISTER_USER_CAR = -6;
 
     private EditText eTextCarModel, eTextCarModelYear, eTextCarType, eTextCarNumber;
@@ -52,6 +55,7 @@ public class CarRegistrationActivity extends AppCompatActivity {
         // 상단바 설정
         settingActionBar();
 
+        // 화면 동작 : 차량 등록
         btnCarRegister.setOnClickListener(v -> {
             String carModel = eTextCarModel.getText().toString();
             String carModelYear = eTextCarModelYear.getText().toString();
@@ -67,13 +71,13 @@ public class CarRegistrationActivity extends AppCompatActivity {
                 CommonResponse commonResponse = carService.execute(CAR_SERVICE_REGISTER_USER_CAR).get();
 
                 if (commonResponse.isSuccess()) {
+                    setResult(CAR_REGISTRATION_ACTIVITY_RESULT_OK);
                     finish();
-                    startActivity(new Intent(CarRegistrationActivity.this, CarActivity.class));
 
                 } else {
                     String registerCarFailedMsg = "등록할 차량의 입력 정보가 부족하거나 이미 등록된 차량입니다.";
 
-                    SnackBarManager.showMessage(findViewById(R.id.frameLayout_user), registerCarFailedMsg);
+                    SnackBarManager.showMessage(v, registerCarFailedMsg);
                 }
 
             } catch (ExecutionException | InterruptedException e) {
@@ -83,9 +87,21 @@ public class CarRegistrationActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bar_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+
+            return true;
+
+        } else if (item.getItemId() == R.id.action_home) {
+            finish();
+            startActivity(new Intent(CarRegistrationActivity.this, MainActivity.class));
 
             return true;
         }

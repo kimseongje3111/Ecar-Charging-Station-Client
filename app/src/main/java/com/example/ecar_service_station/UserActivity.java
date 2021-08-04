@@ -1,9 +1,12 @@
 package com.example.ecar_service_station;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +25,8 @@ import java.util.concurrent.ExecutionException;
 
 public class UserActivity extends AppCompatActivity {
 
+    private static final int CAR_REGISTRATION_ACTIVITY_RESULT_OK = 100;
+    private static final int BANK_REGISTRATION_ACTIVITY_RESULT_OK = 101;
     private static final int USER_BASIC_SERVICE_GET_USER_INFO = -1;
 
     private TextView textProfileName, textProfileEmail, textProfilePhoneNumber;
@@ -33,6 +38,18 @@ public class UserActivity extends AppCompatActivity {
     private Toolbar toolbarUser;
 
     private UserBasicService userBasicService;
+
+    private final ActivityResultLauncher<Intent> startActivityResultForUser =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == CAR_REGISTRATION_ACTIVITY_RESULT_OK) {
+                            startActivity(new Intent(UserActivity.this, CarActivity.class));
+
+                        } else if (result.getResultCode() == BANK_REGISTRATION_ACTIVITY_RESULT_OK) {
+                            startActivity(new Intent(UserActivity.this, BankActivity.class));
+                        }
+                    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,22 +128,37 @@ public class UserActivity extends AppCompatActivity {
             Intent intent = new Intent(UserActivity.this, CarRegistrationActivity.class);
             intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
 
-            startActivity(intent);
+            startActivityResultForUser.launch(intent);
         });
 
         // 화면 동작(6) : 연결 계좌 목록
         layoutAccountList.setOnClickListener(v -> {
+            String loginAccessToken = PreferenceManager.getString(UserActivity.this, "LOGIN_ACCESS_TOKEN");
 
+            Intent intent = new Intent(UserActivity.this, BankActivity.class);
+            intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+
+            startActivity(intent);
         });
 
         // 화면 동작(7) : 새 계좌 추가
         layoutNewAccount.setOnClickListener(v -> {
+            String loginAccessToken = PreferenceManager.getString(UserActivity.this, "LOGIN_ACCESS_TOKEN");
 
+            Intent intent = new Intent(UserActivity.this, BankRegistrationActivity.class);
+            intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+
+            startActivityResultForUser.launch(intent);
         });
 
         // 화면 동작(8) : 금액 충전/환불
         layoutUserCash.setOnClickListener(v -> {
+            String loginAccessToken = PreferenceManager.getString(UserActivity.this, "LOGIN_ACCESS_TOKEN");
 
+            Intent intent = new Intent(UserActivity.this, CashActivity.class);
+            intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+
+            startActivity(intent);
         });
     }
 
@@ -192,7 +224,7 @@ public class UserActivity extends AppCompatActivity {
             } else {
                 String loadUserInfoFailedMsg = "사용자 정보를 불러올 수 없습니다.";
 
-                SnackBarManager.showMessage(findViewById(R.id.frameLayout_user), loadUserInfoFailedMsg);
+                SnackBarManager.showMessage(findViewById(R.id.scrollView_user), loadUserInfoFailedMsg);
             }
 
         } catch (ExecutionException | InterruptedException e) {

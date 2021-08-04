@@ -375,6 +375,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 }
                 case R.id.menu_account: {
+                    intent = new Intent(MainActivity.this, BankActivity.class);
+                    intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+
+                    startActivity(intent);
+                    break;
 
                 }
                 case R.id.menu_notification: {
