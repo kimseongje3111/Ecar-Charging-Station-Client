@@ -53,9 +53,9 @@ public class UserPasswordSettingFragment extends Fragment {
         currentView = inflater.inflate(R.layout.fragment_user_password_setting, container, false);
 
         // 화면 설정
-        eTextPassword = currentView.findViewById(R.id.editTExt_user_setting_password);
-        eTextNewPassword = currentView.findViewById(R.id.editTExt_user_setting_new_password);
-        eTextNewPasswordCheck = currentView.findViewById(R.id.editTExt_user_setting_new_password_check);
+        eTextPassword = currentView.findViewById(R.id.editText_user_setting_password);
+        eTextNewPassword = currentView.findViewById(R.id.editText_user_setting_new_password);
+        eTextNewPasswordCheck = currentView.findViewById(R.id.editText_user_setting_new_password_check);
         btnPasswordChange = currentView.findViewById(R.id.btn_user_setting_password_change);
 
         // 화면 동작 : 비밀번호 변경

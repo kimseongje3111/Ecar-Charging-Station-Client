@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -296,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             TextView textNavEmail = findViewById(R.id.textView_nav_email);
             TextView textNavCash = findViewById(R.id.textView_nav_cash);
             TextView textNavCashPoint = findViewById(R.id.textView_nav_cash_point);
+            Button btnCash = findViewById(R.id.btn_nav_cash);
 
             String userName = PreferenceManager.getString(MainActivity.this, "USER_NAME");
             String userEmail = PreferenceManager.getString(MainActivity.this, "USER_EMAIL");
@@ -306,6 +308,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             textNavEmail.setText(userEmail);
             textNavCash.setText(String.valueOf(userCash));
             textNavCashPoint.setText(String.valueOf(userCashPoint));
+
+            btnCash.setOnClickListener(v -> {
+                String loginAccessToken = PreferenceManager.getString(MainActivity.this, "LOGIN_ACCESS_TOKEN");
+
+                Intent intent = new Intent(MainActivity.this, CashActivity.class);
+                intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+
+                startActivity(intent);
+            });
 
             drawerLayoutMain.openDrawer(GravityCompat.START);
 
