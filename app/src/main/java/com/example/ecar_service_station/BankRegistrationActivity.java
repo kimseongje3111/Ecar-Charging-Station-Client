@@ -4,7 +4,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 
 import com.example.ecar_service_station.dto.request.bank.AuthBankAccountDto;
 import com.example.ecar_service_station.dto.request.bank.RegisterBankAccountDto;
-import com.example.ecar_service_station.dto.request.car.RegisterCarDto;
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.SingleResultResponse;
 import com.example.ecar_service_station.dto.resoponse.custom.RegisteredBankAccountDto;

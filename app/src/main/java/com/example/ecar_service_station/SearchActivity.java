@@ -2,12 +2,10 @@ package com.example.ecar_service_station;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.DrawableRes;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -17,11 +15,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -29,7 +25,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.RecognizerIntent;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,7 +56,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -545,9 +539,9 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
     private void showSearchResults() {
         eTextSearch.setText(search);
 
-        if (getIntent().hasExtra("ErrorCode")) {
+        if (getIntent().hasExtra("ErrorCode") || searchResults == null || searchResults.size() == 0) {
             String searchErrorMsg = "";
-            int errorCode = getIntent().getIntExtra("ErrorCode", -1);
+            int errorCode = getIntent().getIntExtra("ErrorCode", SEARCH_SERVICE_ERROR_NOT_FOUND);
 
             if (errorCode == SEARCH_SERVICE_ERROR_NOT_FOUND) {
                 searchErrorMsg = "검색 결과가 없습니다.";
@@ -716,7 +710,7 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
             Intent intent = new Intent(SearchActivity.this, ReservationActivity.class);
             intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
-            intent.putExtra("chargerId", charger.getId());
+            intent.putExtra("ChargerId", charger.getId());
 
             startActivity(intent);
         });
@@ -729,7 +723,8 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
             Intent intent = new Intent(SearchActivity.this, ChargerActivity.class);
             intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
-            intent.putExtra("chargerId", charger.getId());
+            intent.putExtra("ChargerId", charger.getId());
+            intent.putExtra("Record", true);
 
             startActivity(intent);
         });

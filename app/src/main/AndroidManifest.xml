@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ecar_service_station"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".StationActivity"></activity>
         <!-- Meta data list -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -28,9 +28,7 @@
             android:resource="@color/colorAccent" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="${FCM_CHANNEL}" />
-
-        <!-- Activity list -->
+            android:value="${FCM_CHANNEL}" /> <!-- Activity list -->
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,7 +47,7 @@
         <activity android:name=".BankRegistrationActivity" />
         <activity android:name=".CashActivity" />
         <activity android:name=".ChargerActivity" />
-        <activity android:name=".ReservationActivity"></activity>
+        <activity android:name=".ReservationActivity" />
 
         <service
             android:name=".infra.network.CustomFcmService"

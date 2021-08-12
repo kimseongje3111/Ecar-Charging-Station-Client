@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.ecar_service_station.domain.BankAccount;
-import com.example.ecar_service_station.domain.Car;
 import com.example.ecar_service_station.domain.User;
 import com.example.ecar_service_station.dto.request.bank.CashInDto;
 import com.example.ecar_service_station.dto.request.bank.CashOutDto;
@@ -72,6 +71,8 @@ public class CashActivity extends AppCompatActivity {
 
         // 상단바 설정
         settingActionBar();
+
+        // 하이퍼 링크
         makeTextViewHyperlink(linkBankRegistration);
 
         // 화면 동작(1) : 금액 충전

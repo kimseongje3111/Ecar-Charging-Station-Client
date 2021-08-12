@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.ecar_service_station.domain.Car;
 import com.example.ecar_service_station.dto.request.car.RegisterCarDto;
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.infra.app.PreferenceManager;
