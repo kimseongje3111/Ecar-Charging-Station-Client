@@ -457,7 +457,12 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
                 }
                 case R.id.menu_bookmark: {
+                    intent = new Intent(SearchActivity.this, HistoryAndBookmarkActivity.class);
+                    intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                    intent.putExtra("REQUEST_POSITION", 1);
 
+                    startActivity(intent);
+                    break;
                 }
                 case R.id.menu_car: {
                     intent = new Intent(SearchActivity.this, CarActivity.class);
@@ -465,7 +470,6 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
                     startActivity(intent);
                     break;
-
                 }
                 case R.id.menu_account: {
                     intent = new Intent(SearchActivity.this, BankActivity.class);
@@ -473,7 +477,6 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
                     startActivity(intent);
                     break;
-
                 }
                 case R.id.menu_notification: {
                     intent = new Intent(SearchActivity.this, UserSettingActivity.class);
@@ -550,15 +553,15 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
                 searchErrorMsg = "주소를 상세히 입력해 주세요.";
             }
 
-            textSearchError.setVisibility(View.VISIBLE);
-            textSearchError.setText(searchErrorMsg);
-
             listViewCharger.setVisibility(View.GONE);
+            textSearchError.setVisibility(View.VISIBLE);
+
+            textSearchError.setText(searchErrorMsg);
 
         } else {
             textSearchError.setVisibility(View.GONE);
-
             listViewCharger.setVisibility(View.VISIBLE);
+
             listViewCharger.setAdapter(new CustomChargerList(this, searchResults));
         }
     }
@@ -801,14 +804,14 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
             chargerMode.setText(charger.stringValueOfMode());
 
             if (charger.getState() == CHARGER_STATE_GREEN) {
-                chargerStateGreen.setVisibility(View.VISIBLE);
                 chargerStateYellow.setVisibility(View.GONE);
                 chargerStateRed.setVisibility(View.GONE);
+                chargerStateGreen.setVisibility(View.VISIBLE);
 
             } else if (charger.getState() == CHARGER_STATE_YELLOW) {
                 chargerStateGreen.setVisibility(View.GONE);
-                chargerStateYellow.setVisibility(View.VISIBLE);
                 chargerStateRed.setVisibility(View.GONE);
+                chargerStateYellow.setVisibility(View.VISIBLE);
 
             } else {
                 chargerStateGreen.setVisibility(View.GONE);
@@ -859,14 +862,14 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
             chargerMode.setText(charger.stringValueOfMode());
 
             if (charger.getState() == CHARGER_STATE_GREEN) {
-                chargerStateGreen.setVisibility(View.VISIBLE);
                 chargerStateYellow.setVisibility(View.GONE);
                 chargerStateRed.setVisibility(View.GONE);
+                chargerStateGreen.setVisibility(View.VISIBLE);
 
             } else if (charger.getState() == CHARGER_STATE_YELLOW) {
                 chargerStateGreen.setVisibility(View.GONE);
-                chargerStateYellow.setVisibility(View.VISIBLE);
                 chargerStateRed.setVisibility(View.GONE);
+                chargerStateYellow.setVisibility(View.VISIBLE);
 
             } else {
                 chargerStateGreen.setVisibility(View.GONE);

@@ -230,7 +230,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // 화면 동작(4) : 최근 검색/즐겨찾기
         layoutRecentAndBookmark.setOnClickListener(v -> {
+            String loginAccessToken = PreferenceManager.getString(MainActivity.this, "LOGIN_ACCESS_TOKEN");
 
+            Intent intent = new Intent(MainActivity.this, HistoryAndBookmarkActivity.class);
+            intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+            intent.putExtra("REQUEST_POSITION", 0);
+
+            startActivity(intent);
         });
 
         // 화면 동작(6) : 예약 목록
@@ -373,7 +379,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 }
                 case R.id.menu_bookmark: {
+                    intent = new Intent(MainActivity.this, HistoryAndBookmarkActivity.class);
+                    intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                    intent.putExtra("REQUEST_POSITION", 1);
 
+                    startActivity(intent);
+                    break;
                 }
                 case R.id.menu_car: {
                     intent = new Intent(MainActivity.this, CarActivity.class);
@@ -381,7 +392,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     startActivity(intent);
                     break;
-
                 }
                 case R.id.menu_account: {
                     intent = new Intent(MainActivity.this, BankActivity.class);
@@ -389,7 +399,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     startActivity(intent);
                     break;
-
                 }
                 case R.id.menu_notification: {
                     intent = new Intent(MainActivity.this, UserSettingActivity.class);

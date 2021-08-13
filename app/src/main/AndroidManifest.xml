@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ecar_service_station"
         android:usesCleartextTraffic="true">
-        <activity android:name=".StationActivity"></activity>
+
         <!-- Meta data list -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -48,6 +48,8 @@
         <activity android:name=".CashActivity" />
         <activity android:name=".ChargerActivity" />
         <activity android:name=".ReservationActivity" />
+        <activity android:name=".StationActivity" />
+        <activity android:name=".HistoryAndBookmarkActivity"></activity>
 
         <service
             android:name=".infra.network.CustomFcmService"

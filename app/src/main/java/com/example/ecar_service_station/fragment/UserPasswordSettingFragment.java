@@ -96,13 +96,8 @@ public class UserPasswordSettingFragment extends Fragment {
                         CommonResponse commonResponse = userBasicService.execute(USER_BASIC_SERVICE_UPDATE_PASSWORD).get();
 
                         if (commonResponse.isSuccess()) {
+                            getActivity().finish();
                             startActivity(new Intent(currentContext, LoginActivity.class));
-
-                            getActivity()
-                                    .getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .remove(this)
-                                    .commit();
 
                         } else {
                             String updatePasswordFailedMsg = "현재 비밀번호가 일치하지 않습니다.";

@@ -160,11 +160,13 @@ public class BankActivity extends AppCompatActivity {
 
                 if (userAccountList.size() != 0) {
                     textAccountNotFound.setVisibility(View.GONE);
+                    listViewAccount.setVisibility(View.VISIBLE);
+
                     listViewAccount.setAdapter(new BankActivity.CustomAccountList(this, userAccountList));
 
                 } else {
-                    textAccountNotFound.setVisibility(View.VISIBLE);
                     listViewAccount.setVisibility(View.GONE);
+                    textAccountNotFound.setVisibility(View.VISIBLE);
                 }
 
             } else {

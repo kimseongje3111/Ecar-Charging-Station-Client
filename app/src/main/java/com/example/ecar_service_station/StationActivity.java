@@ -306,14 +306,14 @@ public class StationActivity extends AppCompatActivity implements OnMapReadyCall
             chargerMode.setText(charger.stringValueOfMode());
 
             if (charger.getState() == CHARGER_STATE_GREEN) {
-                chargerStateGreen.setVisibility(View.VISIBLE);
                 chargerStateYellow.setVisibility(View.GONE);
                 chargerStateRed.setVisibility(View.GONE);
+                chargerStateGreen.setVisibility(View.VISIBLE);
 
             } else if (charger.getState() == CHARGER_STATE_YELLOW) {
                 chargerStateGreen.setVisibility(View.GONE);
-                chargerStateYellow.setVisibility(View.VISIBLE);
                 chargerStateRed.setVisibility(View.GONE);
+                chargerStateYellow.setVisibility(View.VISIBLE);
 
             } else {
                 chargerStateGreen.setVisibility(View.GONE);
