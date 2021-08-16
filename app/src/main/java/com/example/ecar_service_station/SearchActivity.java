@@ -71,6 +71,7 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class SearchActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private static final int PERMISSIONS_REQUEST_CODE = 3000;
@@ -266,7 +267,6 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
@@ -678,7 +678,6 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
         close.setOnClickListener(v -> dialog.dismiss());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showDialogForChargerDetails(Charger charger) {
         Dialog dialog = new Dialog(SearchActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -787,7 +786,6 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
         }
 
         @Override
-        @RequiresApi(api = Build.VERSION_CODES.O)
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.listview_marker, null, true);
@@ -841,7 +839,6 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
         }
 
         @Override
-        @RequiresApi(api = Build.VERSION_CODES.O)
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.listview_charger, null, true);

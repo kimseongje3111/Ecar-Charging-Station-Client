@@ -19,14 +19,16 @@ import android.widget.TextView;
 
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.SingleResultResponse;
-import com.example.ecar_service_station.dto.resoponse.custom.ChargerInfoDto;
+import com.example.ecar_service_station.dto.resoponse.custom.search.ChargerInfoDto;
 import com.example.ecar_service_station.infra.app.PreferenceManager;
 import com.example.ecar_service_station.infra.app.SnackBarManager;
+import com.example.ecar_service_station.infra.app.TextHyperLinker;
 import com.example.ecar_service_station.service.ChargerService;
 
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutionException;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ChargerActivity extends AppCompatActivity {
 
     private static final long CHARGER_SERVICE_GET_INFO = -19;
@@ -92,7 +94,6 @@ public class ChargerActivity extends AppCompatActivity {
     }
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void onResume() {
         super.onResume();
         loadChargerInfo();
@@ -154,7 +155,6 @@ public class ChargerActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left_solid);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadChargerInfo() {
         String loginAccessToken = PreferenceManager.getString(ChargerActivity.this, "LOGIN_ACCESS_TOKEN");
         long chargerId = PreferenceManager.getLong(ChargerActivity.this, "CHARGER_ID");
@@ -165,10 +165,10 @@ public class ChargerActivity extends AppCompatActivity {
             CommonResponse commonResponse;
 
             if (!isRecord) {
-                commonResponse = chargerService.execute(chargerId, CHARGER_SERVICE_GET_INFO).get();
+                commonResponse = chargerService.execute(CHARGER_SERVICE_GET_INFO, chargerId).get();
 
             } else {
-                commonResponse = chargerService.execute(chargerId, CHARGER_SERVICE_GET_INFO_RECORD).get();
+                commonResponse = chargerService.execute(CHARGER_SERVICE_GET_INFO_RECORD, chargerId).get();
             }
 
             if (commonResponse.isSuccess()) {
@@ -183,7 +183,7 @@ public class ChargerActivity extends AppCompatActivity {
                 textChargerState.setText(chargerInfo.stringValueOfState());
                 textStateUpdatedAt.setText(chargerInfo.getStateUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-                makeTextViewHyperlink(textStationName);
+                TextHyperLinker.makeTextViewHyperLink(textStationName);
 
             } else {
                 String loadChargerInfoFailedMsg = "충전기 정보를 불러올 수 없습니다.";
@@ -194,13 +194,5 @@ public class ChargerActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             Log.w("Charger", "Loading charger info failed.");
         }
-    }
-
-    private void makeTextViewHyperlink(TextView view) {
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-        spannableStringBuilder.append(view.getText());
-        spannableStringBuilder.setSpan(new URLSpan("#"), 0, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        view.setText(spannableStringBuilder, TextView.BufferType.SPANNABLE);
     }
 }

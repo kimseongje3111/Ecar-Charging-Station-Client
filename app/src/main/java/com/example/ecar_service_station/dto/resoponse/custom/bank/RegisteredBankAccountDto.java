@@ -1,4 +1,4 @@
-package com.example.ecar_service_station.dto.resoponse.custom;
+package com.example.ecar_service_station.dto.resoponse.custom.bank;
 
 import lombok.Data;
 

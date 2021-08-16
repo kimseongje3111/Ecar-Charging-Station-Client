@@ -1,4 +1,4 @@
-package com.example.ecar_service_station.dto.resoponse.custom;
+package com.example.ecar_service_station.dto.resoponse.custom.search;
 
 import com.example.ecar_service_station.domain.Station;
 import com.fasterxml.jackson.annotation.JsonIgnore;

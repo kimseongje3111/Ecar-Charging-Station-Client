@@ -5,9 +5,9 @@ import android.util.Log;
 
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.ListResultResponse;
-import com.example.ecar_service_station.dto.resoponse.custom.ReservationStatementDto;
-import com.example.ecar_service_station.dto.resoponse.custom.UserBookmarkDto;
-import com.example.ecar_service_station.dto.resoponse.custom.UserHistoryDto;
+import com.example.ecar_service_station.dto.resoponse.custom.reservation.ReservationStatementDto;
+import com.example.ecar_service_station.dto.resoponse.custom.user.UserBookmarkDto;
+import com.example.ecar_service_station.dto.resoponse.custom.user.UserHistoryDto;
 import com.example.ecar_service_station.infra.network.HttpConnectionProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

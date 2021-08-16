@@ -27,11 +27,9 @@ import android.widget.TextView;
 import com.example.ecar_service_station.domain.Charger;
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.SingleResultResponse;
-import com.example.ecar_service_station.dto.resoponse.custom.ChargerInfoDto;
-import com.example.ecar_service_station.dto.resoponse.custom.StationInfoDto;
+import com.example.ecar_service_station.dto.resoponse.custom.search.StationInfoDto;
 import com.example.ecar_service_station.infra.app.PreferenceManager;
 import com.example.ecar_service_station.infra.app.SnackBarManager;
-import com.example.ecar_service_station.service.ChargerService;
 import com.example.ecar_service_station.service.StationService;
 import com.example.ecar_service_station.service.UserMainService;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -46,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class StationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int CHARGER_STATE_GREEN = 1;
@@ -191,10 +190,10 @@ public class StationActivity extends AppCompatActivity implements OnMapReadyCall
             CommonResponse commonResponse;
 
             if (!isRecord) {
-                commonResponse = stationService.execute(stationId, STATION_SERVICE_GET_INFO).get();
+                commonResponse = stationService.execute(STATION_SERVICE_GET_INFO, stationId).get();
 
             } else {
-                commonResponse = stationService.execute(stationId, STATION_SERVICE_GET_INFO_RECORD).get();
+                commonResponse = stationService.execute(STATION_SERVICE_GET_INFO_RECORD, stationId).get();
             }
 
             if (commonResponse.isSuccess()) {
@@ -218,7 +217,6 @@ public class StationActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showDialogForChargerDetails(Charger charger) {
         Dialog dialog = new Dialog(StationActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -285,7 +283,6 @@ public class StationActivity extends AppCompatActivity implements OnMapReadyCall
         }
 
         @Override
-        @RequiresApi(api = Build.VERSION_CODES.O)
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.listview_charger, null, true);

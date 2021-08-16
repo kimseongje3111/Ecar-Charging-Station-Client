@@ -1,4 +1,4 @@
-package com.example.ecar_service_station.dto.resoponse.custom;
+package com.example.ecar_service_station.dto.resoponse.custom.reservation;
 
 import com.example.ecar_service_station.domain.Charger;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -13,11 +13,11 @@ public class ReservationStatementDto {
 
     private String reserveTitle;
 
+    private Long chargerId;
+
     private String userName;
 
     private String carNumber;
-
-    private Charger charger;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime reservedAt;

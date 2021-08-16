@@ -1,4 +1,4 @@
-package com.example.ecar_service_station.dto.resoponse.custom;
+package com.example.ecar_service_station.dto.resoponse.custom.user;
 
 import com.example.ecar_service_station.domain.Station;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

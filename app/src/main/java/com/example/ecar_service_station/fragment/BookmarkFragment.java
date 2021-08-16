@@ -11,19 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import com.example.ecar_service_station.HistoryAndBookmarkActivity;
 import com.example.ecar_service_station.R;
 import com.example.ecar_service_station.StationActivity;
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.ListResultResponse;
-import com.example.ecar_service_station.dto.resoponse.custom.UserBookmarkDto;
+import com.example.ecar_service_station.dto.resoponse.custom.user.UserBookmarkDto;
 import com.example.ecar_service_station.infra.app.SnackBarManager;
 import com.example.ecar_service_station.service.UserMainService;
 
@@ -32,6 +30,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class BookmarkFragment extends Fragment {
 
     private static final long USER_MAIN_SERVICE_GET_BOOKMARKS = -22;
@@ -73,7 +72,6 @@ public class BookmarkFragment extends Fragment {
     }
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void onResume() {
         super.onResume();
         loadUserBookmarks();
@@ -81,7 +79,6 @@ public class BookmarkFragment extends Fragment {
         Log.i("BOOKMARK", "-onResume");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void loadUserBookmarks() {
         userMainService = new UserMainService(loginAccessToken);
 
@@ -116,7 +113,6 @@ public class BookmarkFragment extends Fragment {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private class CustomBookmarkList extends ArrayAdapter<UserBookmarkDto> {
 
         private final Activity context;

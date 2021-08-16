@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.SingleResultResponse;
-import com.example.ecar_service_station.dto.resoponse.custom.StationInfoDto;
+import com.example.ecar_service_station.dto.resoponse.custom.search.StationInfoDto;
 import com.example.ecar_service_station.infra.network.HttpConnectionProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -30,12 +30,12 @@ public class StationService extends AsyncTask<Long, Void, CommonResponse> {
     }
 
     @Override
-    protected CommonResponse doInBackground(Long... stationId) {
+    protected CommonResponse doInBackground(Long... requestCode) {
         String hostServer = httpConnectionProvider.getHostServer();
-        String URI = hostServer + "/ecar/station/" + stationId[0];
+        String URI = hostServer + "/ecar/station/" + requestCode[1];
 
         try {
-            if (stationId[1] == STATION_SERVICE_GET_INFO_RECORD) {
+            if (requestCode[0] == STATION_SERVICE_GET_INFO_RECORD) {
                 URI += "/record";
             }
 

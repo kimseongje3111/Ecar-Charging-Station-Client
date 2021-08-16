@@ -16,7 +16,7 @@ import com.example.ecar_service_station.dto.request.bank.AuthBankAccountDto;
 import com.example.ecar_service_station.dto.request.bank.RegisterBankAccountDto;
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.SingleResultResponse;
-import com.example.ecar_service_station.dto.resoponse.custom.RegisteredBankAccountDto;
+import com.example.ecar_service_station.dto.resoponse.custom.bank.RegisteredBankAccountDto;
 import com.example.ecar_service_station.infra.app.PreferenceManager;
 import com.example.ecar_service_station.infra.app.SnackBarManager;
 import com.example.ecar_service_station.service.BankService;

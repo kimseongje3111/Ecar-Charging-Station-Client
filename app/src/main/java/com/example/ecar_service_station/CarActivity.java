@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -72,8 +73,9 @@ public class CarActivity extends AppCompatActivity {
         textCarNotFound = findViewById(R.id.textView_car_notFound);
         iViewNewCar = findViewById(R.id.imageView_new_car);
 
-        // 상단바 설정
+        // 상단바 설정 및 스크롤
         settingActionBar();
+        settingScroll();
 
         // 화면 동작
         iViewNewCar.setOnClickListener(v -> {
@@ -136,6 +138,16 @@ public class CarActivity extends AppCompatActivity {
         actionBar.setSubtitle("");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left_solid);
+    }
+
+    private void settingScroll() {
+        NestedScrollView scrollView = findViewById(R.id.scrollView_car);
+
+        listViewCar.setOnTouchListener((v, event) -> {
+            scrollView.requestDisallowInterceptTouchEvent(true);
+
+            return false;
+        });
     }
 
     private void loadUserCarList() {
