@@ -454,7 +454,12 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
                     break;
                 }
                 case R.id.menu_reservation: {
+                    intent = new Intent(SearchActivity.this, ReservationStatementActivity.class);
+                    intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                    intent.putExtra("REQUEST_POSITION", 0);
 
+                    startActivity(intent);
+                    break;
                 }
                 case R.id.menu_bookmark: {
                     intent = new Intent(SearchActivity.this, HistoryAndBookmarkActivity.class);
@@ -710,7 +715,7 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
             String loginAccessToken = PreferenceManager.getString(SearchActivity.this, "LOGIN_ACCESS_TOKEN");
 
-            Intent intent = new Intent(SearchActivity.this, ReservationActivity.class);
+            Intent intent = new Intent(SearchActivity.this, Reservation1Activity.class);
             intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
             intent.putExtra("ChargerId", charger.getId());
 

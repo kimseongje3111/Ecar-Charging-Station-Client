@@ -8,9 +8,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.URLSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -85,7 +82,7 @@ public class ChargerActivity extends AppCompatActivity {
             String loginAccessToken = PreferenceManager.getString(ChargerActivity.this, "LOGIN_ACCESS_TOKEN");
             long chargerId = PreferenceManager.getLong(ChargerActivity.this, "ChargerId");
 
-            Intent intent = new Intent(ChargerActivity.this, ReservationActivity.class);
+            Intent intent = new Intent(ChargerActivity.this, Reservation1Activity.class);
             intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
             intent.putExtra("ChargerId", chargerId);
 

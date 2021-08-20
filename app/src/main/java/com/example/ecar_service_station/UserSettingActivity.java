@@ -19,7 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class UserSettingActivity extends AppCompatActivity {
 
-    private static String[] tabTitles = {"사용자 정보", "비밀번호 변경", "알림 설정"};
+    private final String[] tabTitles = {"사용자 정보", "비밀번호 변경", "알림 설정"};
 
     private Toolbar toolbarUserSetting;
 

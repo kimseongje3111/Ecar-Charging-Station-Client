@@ -241,7 +241,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // 화면 동작(6) : 예약 목록
         layoutReservationList.setOnClickListener(v -> {
+            String loginAccessToken = PreferenceManager.getString(MainActivity.this, "LOGIN_ACCESS_TOKEN");
 
+            Intent intent = new Intent(MainActivity.this, ReservationStatementActivity.class);
+            intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+            intent.putExtra("REQUEST_POSITION", 0);
+
+            startActivity(intent);
         });
     }
 
@@ -376,6 +382,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     break;
                 }
                 case R.id.menu_reservation: {
+                    intent = new Intent(MainActivity.this, ReservationStatementActivity.class);
+                    intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                    intent.putExtra("REQUEST_POSITION", 0);
+
+                    startActivity(intent);
+                    break;
 
                 }
                 case R.id.menu_bookmark: {

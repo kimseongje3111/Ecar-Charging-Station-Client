@@ -30,6 +30,7 @@ import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.ListResultResponse;
 import com.example.ecar_service_station.dto.resoponse.common.SingleResultResponse;
 import com.example.ecar_service_station.dto.resoponse.custom.reservation.MaxEndDateTimeDto;
+import com.example.ecar_service_station.domain.ReservationStatement;
 import com.example.ecar_service_station.infra.app.PreferenceManager;
 import com.example.ecar_service_station.infra.app.SnackBarManager;
 import com.example.ecar_service_station.infra.app.TextHyperLinker;
@@ -52,7 +53,7 @@ public class Reservation2Activity extends AppCompatActivity {
 
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd - HH:mm");
 
-    private Toolbar toolbarReservation2;
+    private Toolbar toolbarReservation;
 
     private TextView textStartDateTime, textEndDateTime, textMaxEndDateTime, textFares;
     private TextView textCarNumber, textCarModel, textCarType, linkCarRegistration;
@@ -78,7 +79,7 @@ public class Reservation2Activity extends AppCompatActivity {
         saveIntentValues();
 
         // 화면 설정
-        toolbarReservation2 = findViewById(R.id.toolbar_reservation2);
+        toolbarReservation = findViewById(R.id.toolbar_reservation2);
         textStartDateTime = findViewById(R.id.textView_reservation2_start_dateTime);
         textEndDateTime = findViewById(R.id.textView_reservation2_end_dateTime);
         textMaxEndDateTime = findViewById(R.id.textView_reservation2_max_end_dateTime);
@@ -90,7 +91,7 @@ public class Reservation2Activity extends AppCompatActivity {
         layoutFares = findViewById(R.id.layout_reservation2_fares);
         layoutCarNotFound = findViewById(R.id.layout_reservation2_car_notFound);
         listViewCar = findViewById(R.id.listView_reservation2_car);
-        btnReservationComplete = findViewById(R.id.btn_reservation_complete);
+        btnReservationComplete = findViewById(R.id.btn_reservation2_complete);
         spinnerReservationTotalTime = findViewById(R.id.spinner_reservation2_total_time);
 
         // 상단바 및 스크롤
@@ -127,7 +128,12 @@ public class Reservation2Activity extends AppCompatActivity {
                     CommonResponse commonResponse = reservationService.execute(RESERVATION_SERVICE_RESERVE).get();
 
                     if (commonResponse.isSuccess()) {
-                        setResult(RESULT_OK);
+                        SingleResultResponse<ReservationStatement> singleResultResponse = (SingleResultResponse<ReservationStatement>) commonResponse;
+
+                        Intent intent = new Intent();
+                        intent.putExtra("RESERVATION_STATEMENT", singleResultResponse.getData());
+
+                        setResult(RESULT_OK, intent);
 
                     } else {
                         setResult(RESERVATION2_ACTIVITY_RESULT_FAIL);
@@ -196,7 +202,7 @@ public class Reservation2Activity extends AppCompatActivity {
     }
 
     private void settingActionBar() {
-        setSupportActionBar(toolbarReservation2);
+        setSupportActionBar(toolbarReservation);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
@@ -303,7 +309,7 @@ public class Reservation2Activity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LocalDateTime targetDateTime = maxEndDateTime.getTargetDateTime();
-                int fares = (int) ((spinnerMinutes.get(position) / 60) * maxEndDateTime.getFaresPerHour());
+                int fares = (int) ((spinnerMinutes.get(position) / 60.0) * maxEndDateTime.getFaresPerHour());
 
                 if (position != 0) {
                     endDateTime = targetDateTime.plusMinutes(spinnerMinutes.get(position));

@@ -249,7 +249,7 @@ public class StationActivity extends AppCompatActivity implements OnMapReadyCall
 
             String loginAccessToken = PreferenceManager.getString(StationActivity.this, "LOGIN_ACCESS_TOKEN");
 
-            Intent intent = new Intent(StationActivity.this, ReservationActivity.class);
+            Intent intent = new Intent(StationActivity.this, Reservation1Activity.class);
             intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
             intent.putExtra("ChargerId", charger.getId());
 

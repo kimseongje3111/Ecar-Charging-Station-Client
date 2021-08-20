@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.ListResultResponse;
-import com.example.ecar_service_station.dto.resoponse.custom.reservation.ReservationStatementDto;
+import com.example.ecar_service_station.domain.ReservationStatement;
 import com.example.ecar_service_station.dto.resoponse.custom.user.UserBookmarkDto;
 import com.example.ecar_service_station.dto.resoponse.custom.user.UserHistoryDto;
 import com.example.ecar_service_station.infra.network.HttpConnectionProvider;
@@ -81,7 +81,7 @@ public class UserMainService extends AsyncTask<Long, Void, CommonResponse> {
                     return objectMapper.readValue(jsonString, new TypeReference<ListResultResponse<UserBookmarkDto>>() {});
 
                 } else if(requestCode[0] == USER_MAIN_SERVICE_GET_RESERVATION_STATEMENTS) {
-                    return objectMapper.readValue(jsonString, new TypeReference<ListResultResponse<ReservationStatementDto>>() {});
+                    return objectMapper.readValue(jsonString, new TypeReference<ListResultResponse<ReservationStatement>>() {});
                 }
 
                 return objectMapper.readValue(jsonString, CommonResponse.class);

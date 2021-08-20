@@ -1,6 +1,5 @@
 package com.example.ecar_service_station.dto.resoponse.custom.reservation;
 
-import com.example.ecar_service_station.domain.Charger;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
@@ -9,18 +8,15 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class ReservationStatementDto {
+public class SimpleReservationInfoDto {
 
-    private String reserveTitle;
+    private String stationName;
 
-    private Long chargerId;
+    private String chargerName;
 
     private String userName;
 
     private String carNumber;
-
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime reservedAt;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime chargeStartDateTime;
@@ -28,11 +24,5 @@ public class ReservationStatementDto {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime chargeEndDateTime;
 
-    private String state;
-
-    private Integer usedCashPoint;
-
-    private Integer paidCash;
-
-    private Integer cancellationFee;
+    private Integer fares;
 }

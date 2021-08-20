@@ -9,18 +9,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
         android:paddingVertical="15dp"
         android:paddingLeft="15dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:fontFamily="@font/cafe_24_ssurround_air"
-            android:text="금액 충전"
-            android:textColor="@color/black"
-            android:textSize="18dp"
+            android:text="충전 정보 입력"
+            android:textColor="@color/gray_blur"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -82,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cafe_24_ssurround_air"
                 android:hint="(결제 비밀번호 입력)"
+                android:inputType="textPassword"
                 android:paddingLeft="5dp"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
@@ -104,7 +105,7 @@
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/cafe_24_ssurround_air"
             android:text="취소"
-            android:textSize="12dp"
+            android:textSize="14dp"
             android:textStyle="bold" />
 
         <Button
@@ -114,7 +115,7 @@
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/cafe_24_ssurround_air"
             android:text="확인"
-            android:textSize="12dp"
+            android:textSize="14dp"
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -1,11 +1,13 @@
 package com.example.ecar_service_station;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -15,9 +17,10 @@ import com.example.ecar_service_station.fragment.HistoryFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class HistoryAndBookmarkActivity extends AppCompatActivity {
 
-    private static String[] tabTitles = {"최근 검색 목록", "즐겨찾기"};
+    private final String[] tabTitles = {"최근 검색 목록", "즐겨찾기"};
 
     private Toolbar toolbarHistoryAndBookmark;
 
@@ -91,6 +94,7 @@ public class HistoryAndBookmarkActivity extends AppCompatActivity {
 
         ).attach();
     }
+
 
     private HistoryAndBookmarkFragmentAdapter makeFragmentAdapter() {
         Bundle bundle = new Bundle();
