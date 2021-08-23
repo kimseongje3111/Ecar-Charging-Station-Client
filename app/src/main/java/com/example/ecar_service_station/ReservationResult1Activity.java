@@ -69,7 +69,7 @@ public class ReservationResult1Activity extends AppCompatActivity {
 
                         } else if (result.getResultCode() == RESERVATION_PAYMENT_ACTIVITY_RESULT_FAIL) {
                             String reservationPaymentFailedMsg =
-                                    "결제를 완료하지 못했습니다.\n연결된 계좌가 없거나 금액 충전을 할 수 없습니다.\n또는 결제 시간을 초과하여 자동 취소된 예약입니다.";
+                                    "결제를 완료하지 못했습니다.\n결제 비밀번호가 일치하지 않거나 연결된 계좌가 없습니다.\n또는 결제 시간을 초과하여 자동 취소된 예약입니다.";
 
                             SnackBarManager.showMessage(findViewById(R.id.layout_reservation_result1), reservationPaymentFailedMsg);
                         }

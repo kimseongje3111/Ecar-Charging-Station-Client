@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_rectangle_top"
                 android:divider="@color/white"
-                android:dividerHeight="20dp" />
+                android:dividerHeight="20dp"
+                android:padding="5dp" />
 
             <TextView
                 android:id="@+id/textView_reservation_statement_stand_by_notFound"
@@ -121,7 +122,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_rectangle_top"
                 android:divider="@color/white"
-                android:dividerHeight="20dp" />
+                android:dividerHeight="20dp"
+                android:padding="5dp" />
 
             <TextView
                 android:id="@+id/textView_reservation_statement_payment_notFound"
@@ -173,7 +175,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_rectangle_top"
                 android:divider="@color/white"
-                android:dividerHeight="20dp" />
+                android:dividerHeight="20dp"
+                android:padding="5dp" />
 
             <TextView
                 android:id="@+id/textView_reservation_statement_charging_notFound"

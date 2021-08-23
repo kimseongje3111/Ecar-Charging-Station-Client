@@ -2,6 +2,7 @@ package com.example.ecar_service_station.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +17,16 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.ecar_service_station.R;
+import com.example.ecar_service_station.ReservationResult1Activity;
+import com.example.ecar_service_station.ReservationResult2Activity;
+import com.example.ecar_service_station.ReservationResult3Activity;
 import com.example.ecar_service_station.dto.resoponse.common.CommonResponse;
 import com.example.ecar_service_station.dto.resoponse.common.ListResultResponse;
 import com.example.ecar_service_station.domain.ReservationStatement;
 import com.example.ecar_service_station.infra.app.SnackBarManager;
 import com.example.ecar_service_station.service.UserMainService;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -33,6 +38,7 @@ public class ReservationStatement1Fragment extends Fragment {
     private static final long USER_MAIN_SERVICE_GET_RESERVATION_STATEMENTS = -25;
 
     private final String[] reservationStates = {"STAND_BY", "PAYMENT", "CHARGING"};
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd  HH:mm");
 
     private Context currentContext;
     private View currentView;
@@ -43,9 +49,9 @@ public class ReservationStatement1Fragment extends Fragment {
     private UserMainService userMainService;
 
     private String loginAccessToken;
-    private List<ReservationStatement> standByStatementList;
-    private List<ReservationStatement> paymentStatementList;
-    private List<ReservationStatement> chargingStatementList;
+    private List<ReservationStatement> standByList;
+    private List<ReservationStatement> paymentList;
+    private List<ReservationStatement> chargingList;
 
     @Override
     public void onAttach(Context context) {
@@ -68,9 +74,9 @@ public class ReservationStatement1Fragment extends Fragment {
         listViewPayment = currentView.findViewById(R.id.listView_reservation_statement_payment);
         listViewCharging = currentView.findViewById(R.id.listView_reservation_statement_charging);
 
-        standByStatementList = new ArrayList<>();
-        paymentStatementList = new ArrayList<>();
-        chargingStatementList = new ArrayList<>();
+        standByList = new ArrayList<>();
+        paymentList = new ArrayList<>();
+        chargingList = new ArrayList<>();
 
         return currentView;
     }
@@ -96,13 +102,13 @@ public class ReservationStatement1Fragment extends Fragment {
                         .collect(Collectors.groupingBy(ReservationStatement::getState))
                         .forEach((state, reservationStatements) -> {
                             if (state.equals(reservationStates[0])) {           // 예약 확정 대기
-                                standByStatementList = reservationStatements;
+                                standByList = reservationStatements;
 
                             } else if (state.equals(reservationStates[1])) {    // 예약 확정
-                                paymentStatementList = reservationStatements;
+                                paymentList = reservationStatements;
 
                             } else if (state.equals(reservationStates[2])) {    // 충전중
-                                chargingStatementList = reservationStatements;
+                                chargingList = reservationStatements;
                             }
                         });
 
@@ -118,7 +124,7 @@ public class ReservationStatement1Fragment extends Fragment {
     }
 
     private void showReservationStatements() {
-        if (standByStatementList.size() == 0) {
+        if (standByList.size() == 0) {
             listViewStandBy.setVisibility(View.GONE);
             textStandByNotFound.setVisibility(View.VISIBLE);
 
@@ -126,10 +132,10 @@ public class ReservationStatement1Fragment extends Fragment {
             textStandByNotFound.setVisibility(View.GONE);
             listViewStandBy.setVisibility(View.VISIBLE);
 
-            listViewStandBy.setAdapter(new CustomStandByStatementList((Activity) currentContext, standByStatementList));
+            listViewStandBy.setAdapter(new CustomStandByStatementList((Activity) currentContext, standByList));
         }
 
-        if (paymentStatementList.size() == 0) {
+        if (paymentList.size() == 0) {
             listViewPayment.setVisibility(View.GONE);
             textPaymentNotFound.setVisibility(View.VISIBLE);
 
@@ -137,10 +143,10 @@ public class ReservationStatement1Fragment extends Fragment {
             textPaymentNotFound.setVisibility(View.GONE);
             listViewPayment.setVisibility(View.VISIBLE);
 
-            listViewPayment.setAdapter(new CustomPaymentStatementList((Activity) currentContext, paymentStatementList));
+            listViewPayment.setAdapter(new CustomPaymentStatementList((Activity) currentContext, paymentList));
         }
 
-        if (chargingStatementList.size() == 0) {
+        if (chargingList.size() == 0) {
             listViewCharging.setVisibility(View.GONE);
             textChargingNotFound.setVisibility(View.VISIBLE);
 
@@ -148,7 +154,7 @@ public class ReservationStatement1Fragment extends Fragment {
             textChargingNotFound.setVisibility(View.GONE);
             listViewCharging.setVisibility(View.VISIBLE);
 
-            listViewCharging.setAdapter(new CustomChargingStatementList((Activity) currentContext, chargingStatementList));
+            listViewCharging.setAdapter(new CustomChargingStatementList((Activity) currentContext, chargingList));
         }
     }
 
@@ -167,6 +173,22 @@ public class ReservationStatement1Fragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.listview_reservation_statement_stand_by, null, true);
+
+            TextView reservedAt = rowView.findViewById(R.id.listView_stand_by_reservedAt);
+            TextView startDateTime = rowView.findViewById(R.id.listView_stand_by_start_dateTime);
+
+            ReservationStatement reservationStatement = standByStatementList.get(position);
+
+            reservedAt.setText(reservationStatement.getReservedAt().format(dateTimeFormatter));
+            startDateTime.setText(reservationStatement.getChargeStartDateTime().format(dateTimeFormatter));
+
+            rowView.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), ReservationResult1Activity.class);
+                intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                intent.putExtra("RESERVATION_STATEMENT", reservationStatement);
+
+                startActivity(intent);
+            });
 
             return rowView;
         }
@@ -188,6 +210,23 @@ public class ReservationStatement1Fragment extends Fragment {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.listview_reservation_statement_payment, null, true);
 
+            TextView reservationTitle = rowView.findViewById(R.id.listView_payment_title);
+            TextView reservedAt = rowView.findViewById(R.id.listView_payment_reservedAt);
+            TextView startDateTime = rowView.findViewById(R.id.listView_payment_start_dateTime);
+
+            ReservationStatement reservationStatement = paymentStatementList.get(position);
+
+            reservationTitle.setText(reservationStatement.getReserveTitle());
+            reservedAt.setText(reservationStatement.getReservedAt().format(dateTimeFormatter));
+            startDateTime.setText(reservationStatement.getChargeStartDateTime().format(dateTimeFormatter));
+
+            rowView.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), ReservationResult2Activity.class);
+                intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                intent.putExtra("RESERVATION_STATEMENT", reservationStatement);
+
+                startActivity(intent);
+            });
 
             return rowView;
         }
@@ -209,6 +248,23 @@ public class ReservationStatement1Fragment extends Fragment {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.listview_reservation_statement_charging, null, true);
 
+            TextView reservationTitle = rowView.findViewById(R.id.listView_charging_title);
+            TextView startDateTime = rowView.findViewById(R.id.listView_charging_start_dateTime);
+            TextView endDateTime = rowView.findViewById(R.id.listView_charging_end_dateTime);
+
+            ReservationStatement reservationStatement = chargingStatementList.get(position);
+
+            reservationTitle.setText(reservationStatement.getReserveTitle());
+            startDateTime.setText(reservationStatement.getChargeStartDateTime().format(dateTimeFormatter));
+            endDateTime.setText(reservationStatement.getChargeEndDateTime().format(dateTimeFormatter));
+
+            rowView.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), ReservationResult3Activity.class);
+                intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                intent.putExtra("RESERVATION_STATEMENT", reservationStatement);
+
+                startActivity(intent);
+            });
 
             return rowView;
         }

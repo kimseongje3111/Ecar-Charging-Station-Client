@@ -310,7 +310,7 @@ public class ReservationPaymentActivity extends AppCompatActivity {
             String loginAccessToken = PreferenceManager.getString(ReservationPaymentActivity.this, "LOGIN_ACCESS_TOKEN");
             long reservationId = PreferenceManager.getLong(ReservationPaymentActivity.this, "RESERVATION_ID");
 
-            reservationService = new ReservationService(loginAccessToken, getPayReservationDto(reservationId));
+            reservationService = new ReservationService(loginAccessToken, getPayReservationDto(reservationId, paymentPassword.getText().toString()));
 
             try {
                 CommonResponse commonResponse = reservationService.execute(RESERVATION_SERVICE_PAY).get();
@@ -337,9 +337,10 @@ public class ReservationPaymentActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(v -> dialog.dismiss());
     }
 
-    private PayReservationDto getPayReservationDto(long reservationId) {
+    private PayReservationDto getPayReservationDto(long reservationId, String paymentPassword) {
         PayReservationDto payReservationDto = new PayReservationDto();
         payReservationDto.setReservationId(reservationId);
+        payReservationDto.setPaymentPassword(paymentPassword);
         payReservationDto.setUsedCashPoint(usedCashPoint);
 
         return payReservationDto;
