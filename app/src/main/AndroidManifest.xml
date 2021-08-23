@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ecar_service_station"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ReservationResult2Activity"></activity>
+
         <!-- Meta data list -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -28,7 +28,9 @@
             android:resource="@color/colorAccent" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="${FCM_CHANNEL}" /> <!-- Activity list -->
+            android:value="${FCM_CHANNEL}" />
+
+        <!-- Activity list -->
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,8 +54,12 @@
         <activity android:name=".Reservation1Activity" />
         <activity android:name=".Reservation2Activity" />
         <activity android:name=".ReservationResult1Activity" />
+        <activity android:name=".ReservationResult2Activity" />
+        <activity android:name=".ReservationResult3Activity"/>
         <activity android:name=".ReservationPaymentActivity" />
-        <activity android:name=".ReservationStatementActivity" /> <!-- Service list -->
+        <activity android:name=".ReservationStatementActivity" />
+
+        <!-- Service list -->
         <service
             android:name=".infra.network.CustomFcmService"
             android:exported="false">

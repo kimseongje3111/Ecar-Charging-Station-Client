@@ -3,12 +3,13 @@
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/shape_rectangle_lightblue"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/shape_rectangle_lightblue_border_top"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingVertical="15dp"
@@ -129,6 +130,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#B0C4DE"
         android:gravity="right"
         android:orientation="horizontal"
         android:padding="5dp">

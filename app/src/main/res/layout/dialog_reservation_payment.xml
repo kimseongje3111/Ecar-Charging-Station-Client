@@ -3,7 +3,7 @@
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/shape_rectangle_lightblue"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,6 +12,7 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingVertical="15dp"
+        android:background="@drawable/shape_rectangle_lightblue_border_top"
         android:paddingLeft="15dp">
 
         <TextView
@@ -51,6 +52,7 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:orientation="horizontal"
+        android:background="#B0C4DE"
         android:padding="5dp">
 
         <Button

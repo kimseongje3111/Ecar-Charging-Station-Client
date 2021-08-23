@@ -151,7 +151,13 @@ public class ReservationResult1Activity extends AppCompatActivity {
             finish();
 
             if (isNewReservation) {
-                startActivity(new Intent(ReservationResult1Activity.this, ReservationStatementActivity.class));
+                String loginAccessToken = PreferenceManager.getString(ReservationResult1Activity.this, "LOGIN_ACCESS_TOKEN");
+
+                Intent intent = new Intent(new Intent(ReservationResult1Activity.this, ReservationStatementActivity.class));
+                intent.putExtra("LOGIN_ACCESS_TOKEN", loginAccessToken);
+                intent.putExtra("REQUEST_POSITION", 0);
+
+                startActivity(intent);
             }
 
             return true;
