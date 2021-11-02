@@ -95,7 +95,6 @@ public class HistoryAndBookmarkActivity extends AppCompatActivity {
         ).attach();
     }
 
-
     private HistoryAndBookmarkFragmentAdapter makeFragmentAdapter() {
         Bundle bundle = new Bundle();
         bundle.putString("LOGIN_ACCESS_TOKEN", loginAccessToken);

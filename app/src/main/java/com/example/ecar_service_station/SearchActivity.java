@@ -555,7 +555,7 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
                 searchErrorMsg = "검색 결과가 없습니다.";
 
             } else if (errorCode == SEARCH_SERVICE_ERROR_ADDRESS_EXCEEDED) {
-                searchErrorMsg = "주소를 상세히 입력해 주세요.";
+                searchErrorMsg = "검색 결과가 너무 많습니다. 주소를 상세히 입력하세요.";
             }
 
             listViewCharger.setVisibility(View.GONE);
